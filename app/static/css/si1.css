@@ -1,0 +1,81 @@
+
+/* WARNING AVERIGUAR EL POR QUE DE ESTO */
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+
+
+/************************ FRAME ************************/
+
+
+iframe{
+  /* tamano */
+  height: 100%;
+  width: 100%;
+}
+
+/*** HEADER ***/
+header {
+  /* fondo */
+  background-color:rgb(255,212,201);
+  height: 14%;
+  /* texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(95, 9, 95);
+  font-size: 130%;
+  font-family:"courier";
+}
+
+
+/*** MENU ***/
+.menu {
+  /* fondo */
+  height: 81%;
+  position: absolute;
+  bottom: 5%;
+  width:15%;
+  background-color: rgb(198,229,177);
+  /* texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/*** CONTENT ***/
+.content {
+  /* fondo */
+  height: 81%;
+  position: absolute;
+  bottom: 5%;
+  margin-left: 15%;
+  width:85%;
+  background-color: rgb(252, 243, 207);
+  /* texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/*** FOOTER ***/
+footer {
+  /* fondo */
+  height: 5%;
+  position: absolute;
+  bottom: 0%;
+  width:100%;
+  background-color: rgb(255,212,201);
+  /* texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 90%;
+  font-family:"Helvetica";
+}
+

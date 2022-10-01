@@ -1,0 +1,77 @@
+{
+    "peliculas": [
+        {
+            "id": 1,
+            "titulo": "Barbie en la princesa y la costurera",
+            "poster": "imagenes/barbie.jpg",
+            "director": "William Lau",
+            "precio": 18.99,
+            "categoria": "Animacion",
+            "anno": 2004,
+            "actores": [
+                {
+                "nombre": "Kelly Sheridan",
+                "personaje": "Princesa Anneliese",
+                "foto": "imagenes/anneliese.jpg"
+                }, 
+                {
+                "nombre": "Kelly Sheridan",
+                "personaje": "Erika",
+                "foto": "imagenes/erika.jpg"
+                } 
+            ]
+
+        },
+        {
+            "id": 2,
+            "titulo": "Winx Club: El secreto del reino perdido",
+            "poster": "imagenes/winx.jpg",
+            "director": "Iginio Straffi",
+            "precio": 19.99,
+            "categoria": "Fantasia",
+            "anno": 2007,
+            "actores": [
+                {
+                "nombre": "Letizia Ciampa",
+                "personaje": "Bloom",
+                "foto": "imagenes/bloom.jpg"
+                }, 
+                {
+                "nombre": "Perla Liberatori",
+                "personaje": "Stella",
+                "foto": "imagenes/stella.jpg"
+                },
+                {
+                "nombre": "Ilaria Latini",
+                "personaje": "Flora",
+                "foto": "imagenes/flora.jpg"
+                }  
+            ]
+
+        },
+        {
+            "id": 3,
+            "titulo": "Camp Rock",
+            "poster": "imagenes/camprock.jpg",
+            "director": "Matthew Diamond",
+            "precio": 5.99,
+            "categoria": "Musical",
+            "anno": 2008,
+            "actores": [
+                {
+                "nombre": "Demi Lovato",
+                "personaje": "Mitchie Torres",
+                "foto": "imagenes/mitchie.jpg"
+                }, 
+                {
+                "nombre": "Joe Jonas",
+                "personaje": "Shane Gray",
+                "foto": "imagenes/shane.jpg"
+                }
+            ]
+
+        }  
+
+    ]
+}
+ 
