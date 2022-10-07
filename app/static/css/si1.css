@@ -1,10 +1,11 @@
 
-/* WARNING AVERIGUAR EL POR QUE DE ESTO */
+/* GENERAL */
 * {
   margin: 0;
 }
 html, body {
   height: 100%;
+  overflow: hidden;
 }
 
 
@@ -60,6 +61,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: scroll;
 }
 
 
