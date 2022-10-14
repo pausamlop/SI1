@@ -27,9 +27,26 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(95, 9, 95);
+  color: #ff7e5f;
   font-size: 130%;
-  font-family:"courier";
+  font-family:"Roboto";
+}
+
+/*** ICONO DE USUARIO ***/
+#usuario {
+	position: fixed;
+  right: 30px;
+	float: right;
+	max-height: 40px;
+}
+
+
+/*** ICONO CARRITO ***/
+#carrito {
+  position: fixed;
+  right: 90px;
+	float: right;
+	max-height: 40px;
 }
 
 
@@ -44,9 +61,25 @@ header {
   /* texto */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
 }
 
+
+/*** NAV DEL MENU ***/
+nav {
+  position: sticky;
+	font-size: 20px;;
+	font-family: "Roboto";
+	text-align: left;
+  padding-right: 70px;
+  padding-top: 10px;
+ 
+
+}
+
+a{
+  color: #b1472d;
+}
 
 /*** CONTENT ***/
 .content {
@@ -81,3 +114,115 @@ footer {
   font-family:"Helvetica";
 }
 
+
+
+
+
+/*** FORM DEL INICIO DE SESION***/
+form{overflow-y: scroll;
+  font-family: 'Roboto';
+  background: #ff7e5f;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #feb47b, #ff7e5f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 82%;
+  position: absolute;
+  bottom: 4%;
+  margin-left: 15%;
+  width:85%;
+}
+
+h1{
+  text-align: center;
+  position: relative;
+  font-weight: 700;
+}
+
+.form{
+  background: #fff;
+  padding: 50px 10px;
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  width: 50%;
+  margin: 40px auto;
+}
+
+form .grupo{
+  position: relative;
+  margin: 45px ;
+}
+
+input{
+  background: none;
+  color: #c6c6c6;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #49454567;
+}
+
+input:focus{ 
+  outline: none;
+  color: #5e5d5d;
+}
+
+label{
+  color: #49454567;
+  font-size: 16px;
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  transition: 0.5s ease all;
+  pointer-events: none;
+}
+
+input:focus~label,
+input:valid~label{
+  top: -14px;
+  font-size: 12px;
+  color: black; 
+}
+
+.barra{
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.barra::before{
+  content: "";
+  height: 2px;
+  width: 0%;
+  bottom: 0;
+  position: absolute;
+  background: linear-gradient(to right, #feb47b, #ff7e5f);
+  transition: 0.3s ease width;
+  left: 0;
+}
+
+input:focus~.barra::before{
+  width: 100%;
+}
+
+
+button{
+  font-family: 'roboto';
+  background: #ff7e5f;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #feb47b, #ff7e5f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border: none;
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  color: #fff;
+  height: 40px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+@media screen and (max-width:500px){
+  form{
+      width: 80%;
+  }
+}
