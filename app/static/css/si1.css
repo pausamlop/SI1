@@ -114,8 +114,54 @@ footer {
   font-family:"Helvetica";
 }
 
+/************************ PRINCIPAL ************************/
 
+.princip {
+  /* fondo */
+  height: 81%;
+  position: absolute;
+  bottom: 5%;
+  margin-left: 15%;
+  width:85%;
+  background-color: rgb(252, 243, 207);
+  
+  /* disposicion */
+  /* display: flex; */
+  overflow-y: scroll;
+}
 
+.princip_title {
+  margin-top: 5%;
+}
+
+div.polaroid {
+  
+  width: 20%;
+  height: 60%;
+  border-radius: 3%;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 5%;
+  margin-left: 10%;
+  float: left;
+  text-align: center;
+
+}
+
+.polaroid_img{
+  width: 90%;
+  height: 80%;
+  border-radius: 3%;
+  margin-top: 5%;
+}
+
+.polaroid_txt{
+  margin-top: 3%;
+  font-size: 150%;
+  font-family:"Roboto";
+  color: #b1472d;
+
+}
 
 
 /*** FORM DEL INICIO DE SESION***/

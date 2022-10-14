@@ -3,7 +3,7 @@
         {
             "id": 1,
             "titulo": "Barbie en la princesa y la costurera",
-            "poster": "imagenes/barbie.jpg",
+            "poster": "img/barbie.jpg",
             "director": "William Lau",
             "precio": 18.99,
             "categoria": "Animacion",
@@ -12,12 +12,12 @@
                 {
                 "nombre": "Kelly Sheridan",
                 "personaje": "Princesa Anneliese",
-                "foto": "imagenes/anneliese.jpg"
+                "foto": "img/anneliese.jpg"
                 }, 
                 {
                 "nombre": "Kelly Sheridan",
                 "personaje": "Erika",
-                "foto": "imagenes/erika.jpg"
+                "foto": "img/erika.jpg"
                 } 
             ]
 
@@ -25,7 +25,7 @@
         {
             "id": 2,
             "titulo": "Winx Club: El secreto del reino perdido",
-            "poster": "imagenes/winx.jpg",
+            "poster": "img/winx.jpg",
             "director": "Iginio Straffi",
             "precio": 19.99,
             "categoria": "Fantasia",
@@ -34,17 +34,17 @@
                 {
                 "nombre": "Letizia Ciampa",
                 "personaje": "Bloom",
-                "foto": "imagenes/bloom.jpg"
+                "foto": "img/bloom.jpg"
                 }, 
                 {
                 "nombre": "Perla Liberatori",
                 "personaje": "Stella",
-                "foto": "imagenes/stella.jpg"
+                "foto": "img/stella.jpg"
                 },
                 {
                 "nombre": "Ilaria Latini",
                 "personaje": "Flora",
-                "foto": "imagenes/flora.jpg"
+                "foto": "img/flora.jpg"
                 }  
             ]
 
@@ -52,7 +52,7 @@
         {
             "id": 3,
             "titulo": "Camp Rock",
-            "poster": "imagenes/camprock.jpg",
+            "poster": "img/camprock.jpg",
             "director": "Matthew Diamond",
             "precio": 5.99,
             "categoria": "Musical",
@@ -61,12 +61,29 @@
                 {
                 "nombre": "Demi Lovato",
                 "personaje": "Mitchie Torres",
-                "foto": "imagenes/mitchie.jpg"
+                "foto": "img/mitchie.jpg"
                 }, 
                 {
                 "nombre": "Joe Jonas",
                 "personaje": "Shane Gray",
-                "foto": "imagenes/shane.jpg"
+                "foto": "img/shane.jpg"
+                }
+            ]
+
+        },
+        {
+            "id": 4,
+            "titulo": "El Exorcista",
+            "poster": "img/exorcista.jpg",
+            "director": "William Friedkin",
+            "precio": 15.99,
+            "categoria": "Terror",
+            "anno": 1973,
+            "actores": [
+                {
+                "nombre": "Linda Blair",
+                "personaje": "Regan",
+                "foto": "img/regan.jpg"
                 }
             ]
 

@@ -10,21 +10,21 @@
 <body> 
     <iframe src="{{ url_for('frame') }}"></iframe>
 
-    <!-- <h1 class="center"> La Fantastica Tienda de Peliculas </h1>
-    <h2>elena y paula te ofrecen esta seleccion de dvds</h2>
+    <div class="princip"> 
 
-    <input type="search" name="buscador" placeholder="Titulo">
-    <input type="submit" value="Buscar">
+        <h1 class="princip_title">Elena y Paula te ofrecen esta exquisita colección </h1>
+        
+        <!-- imprimir los posters con su fondo y titulo -->
+        {% for item in movies %}  
+        <div class="polaroid">
+        <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img" >
+        <h1 class="polaroid_txt"> {{item.titulo}} </h1>
+        </div>
+        {% endfor %}
 
-    <select name="filtro" id="filtro">
-        <option value="a"> </option>
-        <option value="b">Miedo</option>
-        <option value="c">Amor</option>
-        <option value="d">Misterio</option>
-      </select>
+    </div>
 
-    <p> aqui deberian estar las pelis </p>
-    <p> ay hace falta un carrito </p> -->
+
 
 
 </body>

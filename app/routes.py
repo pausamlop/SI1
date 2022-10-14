@@ -10,11 +10,11 @@ import sys
 @app.route('/')
 @app.route('/principal')
 def principal():
-    print ("hola")
+    print ("buenas")
     print (url_for('static', filename='css/si1.css'), file=sys.stderr)
     catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
-    return render_template('principal.html', title = "Home")
+    return render_template('principal.html', title = "Home", movies=catalogue['peliculas'])
 
 @app.route('/frame')
 def frame():
