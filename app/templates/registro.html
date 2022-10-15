@@ -6,7 +6,7 @@ registro
 
 
 {% block content %}
-    <form action="{{ url_for('registro') }}" method="POST" id="form_registro">
+    <form action="{{ url_for('registro') }}" method="POST" id="formregistro">
 
 
         <div class="registro">
@@ -47,10 +47,11 @@ registro
             <button type="submit">Crear cuenta</button>
         </div>
     </form>
-   
 
-    <script type="text/javascript" src="../static/javascript/registro.js"></script>
+    
     <script src="../static/javascript/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/javascript/registro.js"></script>
+    
     
 
 {% endblock %}

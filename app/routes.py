@@ -56,13 +56,18 @@ def acceso():
     #     print (request.referrer, file=sys.stderr)
     return render_template('acceso.html', title = "Acceso")
 
+
+
+@app.route('/showregistro', methods=['GET', 'POST'])
+def showregistro():
+    return render_template('registro.html', title = "Registro")
+
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
-    return render_template('acceso.html', title = "Registro")
-
+    return redirect(url_for('principal'))
 
     
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('usuario', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('principal'))
