@@ -123,15 +123,32 @@ footer {
   bottom: 5%;
   margin-left: 15%;
   width:85%;
-  background-color: rgb(252, 243, 207);
+  background: #ff7e5f;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #feb47b, #ff7e5f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   
   /* disposicion */
   /* display: flex; */
   overflow-y: scroll;
 }
 
-.princip_title {
-  margin-top: 5%;
+.princip_cabecera{
+  background: #fff;
+  padding: 50px 10px;
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  width: 50%;
+  margin: 40px auto;
+}
+
+.princip_busqueda {
+  position: relative;
+  margin: 45px ;
+}
+
+.princip_filtro {
+  position: relative;
+  margin: 45px ;
 }
 
 div.polaroid {
@@ -141,8 +158,9 @@ div.polaroid {
   border-radius: 3%;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin-top: 5%;
+  margin-top: 4%;
   margin-left: 10%;
+  margin-bottom: 3%;
   float: left;
   text-align: center;
 

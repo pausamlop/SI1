@@ -12,7 +12,32 @@
 
     <div class="princip"> 
 
-        <h1 class="princip_title">Elena y Paula te ofrecen esta exquisita colección </h1>
+        <div class="princip_cabecera">
+
+            <h1>Elena y Paula te ofrecen esta exquisita colección </h1>
+
+            <div class="princip_busqueda">
+                <input type="text" name="" id="name" required><span class="barra"></span>
+                <label for="">Búsqueda</label>
+            </div>
+
+            <!-- <div class="princip_filtro">
+
+                <input type="search" name="buscador" placeholder="Titulo">
+            
+                <select name="filtro" id="filtro">
+                    <option value="a"> </option>
+                    <option value="b">Miedo</option>
+                    <option value="c">Amor</option>
+                    <option value="d">Misterio</option>
+                </select>
+
+                
+            </div> -->
+
+            <button type="submit">Buscar</button>
+
+        </div>
         
         <!-- imprimir los posters con su fondo y titulo -->
         {% for item in movies %}  
