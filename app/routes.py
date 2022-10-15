@@ -32,26 +32,32 @@ def index():
     return render_template('index.html', title = "Home", movies=catalogue['peliculas'])
 
 @app.route('/acceso', methods=['GET', 'POST'])
-def login():
-    # doc sobre request object en http://flask.pocoo.org/docs/1.0/api/#incoming-request-data
-    if 'username' in request.form:
-        # aqui se deberia validar con fichero .dat del usuario
-        if request.form['username'] == 'pp':
-            session['usuario'] = request.form['username']
-            session.modified=True
-            # se puede usar request.referrer para volver a la pagina desde la que se hizo login
-            return redirect(url_for('principal'))
-        else:
-            # aqui se le puede pasar como argumento un mensaje de login invalido
-            return render_template('registro.html', title = "Registro")
-    else:
-        # se puede guardar la pagina desde la que se invoca 
-        session['url_origen']=request.referrer
-        session.modified=True        
-        # print a error.log de Apache si se ejecuta bajo mod_wsgi
-        print (request.referrer, file=sys.stderr)
-        return render_template('registro.html', title = "Registro")
+def acceso():
+    # # doc sobre request object en http://flask.pocoo.org/docs/1.0/api/#incoming-request-data
+    # if 'username' in request.form:
+    #     # aqui se deberia validar con fichero .dat del usuario
+    #     if request.form['username'] == 'pp':
+    #         session['usuario'] = request.form['username']
+    #         session.modified=True
+    #         # se puede usar request.referrer para volver a la pagina desde la que se hizo login
+    #         return redirect(url_for('principal'))
+    #     else:
+    #         # aqui se le puede pasar como argumento un mensaje de login invalido
+    #         return render_template('registro.html', title = "Registro")
+    # else:
+    #     # se puede guardar la pagina desde la que se invoca 
+    #     session['url_origen']=request.referrer
+    #     session.modified=True        
+    #     # print a error.log de Apache si se ejecuta bajo mod_wsgi
+    #     print (request.referrer, file=sys.stderr)
+    return render_template('acceso.html', title = "Acceso")
 
+@app.route('/registro', methods=['GET', 'POST'])
+def registro():
+    return render_template('registro.html', title = "Registro")
+
+
+    
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('usuario', None)

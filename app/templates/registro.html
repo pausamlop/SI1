@@ -9,58 +9,47 @@
 
 <body> 
     <iframe src="{{ url_for('frame') }}"></iframe>
-    <form action="" method="POST" id="form">
+    <form action="{{ url_for('registro') }}" method="POST" id="form">
+
         <div class="form">
             <h1>Registro</h1>
 
             <div class="grupo">
-                <input type="text" name="" id="name" required><span class="barra"></span>
-                <label for="">Nombre</label>
-            </div>
-
-            <div class="grupo">
-                <input type="text" name="" id="name" required><span class="barra"></span>
-                <label for="">Apellidos</label>
-            </div>
-
-            <div class="grupo">
-                <input type="text" name="" id="name" required><span class="barra"></span>
+                <input type="text" name="" id="nameusuario" minlength="5" required><span class="barra"></span>
                 <label for="">Usuario</label>
             </div>
 
             <div class="grupo">
-                <input type="text" name="" id="name" required><span class="barra"></span>
-                <label for="">Tarjeta de credito</label>
-            </div>
-
-            <div class="grupo">
-                <input type="text" name="" id="name" required><span class="barra"></span>
+                <input type="text" name="" id="email" required><span class="barra"></span>
                 <label for="">Email</label>
             </div>
 
             <div class="grupo">
-                <input type="password" name="" id="name" required><span class="barra"></span>
+                <input type="text" name="" id="tarjeta" minlength="16" maxlength="16" required><span class="barra"></span>
+                <label for="">Tarjeta de crédito</label>
+            </div>
+
+            <div class="grupo">
+                <input type="text" name="" id="direccion" maxlength="50" required><span class="barra"></span>
+                <label for="">Dirección de envío</label>
+            </div>
+
+            <div class="grupo">
+                <input type="password" name="" id="pass1" minlength="6" required><span class="barra"></span>
                 <label for="">Contraseña</label>
             </div>
 
             <div class="grupo">
-                <input type="password" name="" id="name" required><span class="barra"></span>
+                <input type="password" name="" id="pass2" minlength="6" required><span class="barra"></span>
                 <label for="">Repetir contraseña</label>
             </div>
             
-        
-            <!-- <div class="grupo">
-                <input type="text" name="" id="name" required><span class="barra"></span>
-                <label for="">Nombre</label>
-            </div>
-            <div class="grupo">
-                <input type="password" name="" id="name" required><span class="barra"></span>
-                <label for="">Contraseña</label>
-            </div> -->
 
             <button type="submit">Crear cuenta</button>
         </div>
     </form>
+   
+    <script type="text/javascript" src="../static/javascript/registro.js"></script>
 
 </body>
 </html>

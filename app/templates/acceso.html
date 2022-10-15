@@ -7,9 +7,11 @@
     
 </head>
 
+
+<!-- Actualizadas las urls -->
 <body> 
     <iframe src="{{ url_for('frame') }}"></iframe>
-    <form action="" method="POST" id="form">
+    <form action="{{ url_for('acceso') }}" method="POST" id="form">
         <div class="form">
             <h1>Inicio sesión</h1>
             <div class="grupo">
@@ -17,7 +19,7 @@
                 <label for="">Nombre</label>
             </div>
             <div class="grupo">
-                <input type="password" name="" id="name" required><span class="barra"></span>
+                <input type="password" name="" id="pass" required><span class="barra"></span>
                 <label for="">Contraseña</label>
             </div>
 

@@ -19,11 +19,13 @@
         <nav>
             <ul>
               <br>
-              <li><a href="#">Inicio</a></li>
+              <li><a href="{{ url_for('principal') }}">Página principal</a></li>
               <br>
               <li><a href="#">Historial de compras</a></li>
               <br>
-              <li><a href="registro.html">Regístrate</a></li>
+              <li><a href="{{ url_for('acceso') }}">Inicio sesión</a></li>
+              <br>
+              <li><a href="{{ url_for('registro') }}">Regístrate</a></li>
             </ul>
           </nav>
     </div>
@@ -31,9 +33,6 @@
     <div class="content"> 
     </div>
 
-    <!--Este va a ser para el estilo de la ventana de registro-->
-    <div class="form"> 
-    </div>
 
     <footer> 
         <p> Copyright © Elena&Paula </p>
