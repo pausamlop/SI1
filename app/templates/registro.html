@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
+{% extends "frame.html" %}
 
-<head>
-    <title> Registro </title>
-    <link rel="stylesheet" type="text/css" href="../static/css/si1.css">
-    
-</head>
+{% block title %}
+registro
+{% endblock%}
 
-<body> 
-    <iframe src="{{ url_for('frame') }}"></iframe>
+{% block content %}
     <form action="{{ url_for('registro') }}" method="POST" id="form">
 
         <div class="form">
@@ -51,5 +47,4 @@
    
     <script type="text/javascript" src="../static/javascript/registro.js"></script>
 
-</body>
-</html>
+{% endblock %}

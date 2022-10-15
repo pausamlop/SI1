@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html>
+{% extends "frame.html" %}
 
-<head>
-    <title> La Fantastica Tienda de Peliculas </title>
-    <link rel="stylesheet" type="text/css" href="../static/css/si1.css">
-    
-</head>
+{% block title %}
+principal
+{% endblock%}
 
-<body> 
-    <iframe src="{{ url_for('frame') }}"></iframe>
+{% block content %}
 
     <div class="princip"> 
 
         <div class="princip_cabecera">
-
-            <h1>Elena y Paula te ofrecen esta exquisita colección </h1>
 
             <div class="princip_busqueda">
                 <input type="text" name="" id="name" required><span class="barra"></span>
@@ -35,7 +29,7 @@
                 
             </div> -->
 
-            <button type="submit">Buscar</button>
+            <button class="princip_button" type="submit">Buscar</button>
 
         </div>
         
@@ -43,14 +37,9 @@
         {% for item in movies %}  
         <div class="polaroid">
         <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img" >
-        <h1 class="polaroid_txt"> {{item.titulo}} </h1>
+        <a href="{{ url_for('pelicula') }}" class="polaroid_txt">{{item.titulo}} </a>
         </div>
         {% endfor %}
 
     </div>
-
-
-
-
-</body>
-</html>
+{% endblock %}

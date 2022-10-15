@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
+{% extends "frame.html" %}
 
-<head>
-    <title> La Fantastica Tienda de Peliculas </title>
-    <link rel="stylesheet" type="text/css" href="../static/css/si1.css">
-    
-</head>
+{% block title %}
+carrito
+{% endblock%}
 
-<body> 
-    <iframe src="{{ url_for('frame') }}"></iframe>
+{% block content %}
     <!-- <h1 class="center"> La Fantastica Tienda de Peliculas </h1>
     <h2>elena y paula te ofrecen esta seleccion de dvds</h2>
 
@@ -26,5 +22,4 @@
     <p> ay hace falta un carrito </p> -->
 
 
-</body>
-</html>
+{% endblock %}

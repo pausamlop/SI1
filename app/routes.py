@@ -8,7 +8,7 @@ import os
 import sys
 
 @app.route('/')
-@app.route('/principal')
+@app.route('/principal', methods=['GET', 'POST'])
 def principal():
     print ("buenas")
     print (url_for('static', filename='css/si1.css'), file=sys.stderr)
@@ -22,6 +22,10 @@ def frame():
     print (url_for('static', filename='css/si1.css'), file=sys.stderr)
     # print (url_for(filename='/templates/frame.html'), file=sys.stderr)
     return render_template('frame.html', title = "Home")
+
+@app.route('/pelicula')
+def pelicula():
+    return render_template('pelicula.html', title = "Pelicula")
 
 
 @app.route('/index')
@@ -54,7 +58,8 @@ def acceso():
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
-    return render_template('registro.html', title = "Registro")
+    print("REGISTRO")
+    return render_template('registro.html',title = "Registro")
 
 
     

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-
+    <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="../static/css/si1.css">
 
 </head>
@@ -30,13 +30,15 @@
           </nav>
     </div>
 
-    <div class="content"> 
-    </div>
+    {% block content%} {% endblock %}
+
 
 
     <footer> 
         <p> Copyright © Elena&Paula </p>
     </div>
+
+    
 
 
 
