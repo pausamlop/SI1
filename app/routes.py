@@ -58,8 +58,7 @@ def acceso():
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
-    print("REGISTRO")
-    return render_template('registro.html',title = "Registro")
+    return render_template('acceso.html', title = "Registro")
 
 
     
