@@ -185,6 +185,68 @@ div.polaroid {
 
 }
 
+/************************ PELICULA ************************/
+
+.peli_poster{
+  width: 25%;
+  height: 68%;
+  margin-top: 4%;
+  margin-left: 4%;
+  border-radius: 3%;
+  position:fixed;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.peli_form{
+  background: #fff;
+  padding: 50px 10px;
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  width: 50%;
+  margin-left: 41%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  overflow-y: scroll;
+  overflow-y: sticky;
+}
+
+.peli_info{
+
+  margin-right: 4%;
+  margin-top: 2%;
+  font-family: 'roboto';
+  font-size: 150%;
+}
+
+.peli_actor{
+
+  margin-left: 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width:35%;
+  height:50%;
+  float: left;
+}
+
+.peli_act_info {
+  text-align: center;
+  font-family: 'roboto';
+}
+
+.peli_actor_foto{
+  width:90%;
+  height:90%;
+  border-radius: 3%;
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+
+}
+
+
+
+
+
+
+
 
 /*** FORM DEL INICIO DE SESION***/
 form{overflow-y: scroll;

@@ -23,9 +23,11 @@ def frame():
     # print (url_for(filename='/templates/frame.html'), file=sys.stderr)
     return render_template('frame.html', title = "Home")
 
-@app.route('/pelicula')
-def pelicula():
-    return render_template('pelicula.html', title = "Pelicula")
+@app.route('/pelicula/<int:id>')
+def pelicula(id):
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    return render_template('pelicula.html', title = "Pelicula", movie_id=id, movies=catalogue['peliculas'])
 
 
 @app.route('/index')

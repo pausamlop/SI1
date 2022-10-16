@@ -5,21 +5,47 @@ pelicula
 {% endblock%}
 
 {% block content %}
-    <!-- <h1 class="center"> La Fantastica Tienda de Peliculas </h1>
-    <h2>elena y paula te ofrecen esta seleccion de dvds</h2>
 
-    <input type="search" name="buscador" placeholder="Titulo">
-    <input type="submit" value="Buscar">
+  {% for item in movies %}  
+    {% if item.id == movie_id %}
+      <div class="princip"> <!-- CLASE FONDO  -->
+        <img src="{{url_for('static', filename=item.poster)}}" class="peli_poster">
+        <div class="peli_form">
+          <h1>{{item.titulo}}</h1>
+          
+          <ul>
+            <br>
+            <li><p class="peli_info">Precio: {{item.precio}} </p></li>
+            <br>
+            <li><p class="peli_info">Director: {{item.director}}</p></li>
+            <br>
+            <li><p class="peli_info">Categoria: {{item.categoria}}</p></li>
+            <br>
+            <li><p class="peli_info">Año: {{item.anno}}</p></li>
+            <br>
+            <li><p class="peli_info">Actores: </p></li>
+          </ul>
 
-    <select name="filtro" id="filtro">
-        <option value="a"> </option>
-        <option value="b">Miedo</option>
-        <option value="c">Amor</option>
-        <option value="d">Misterio</option>
-      </select>
+          <div class="peli_act">
+            
+          {% for item in item.actores %}  
 
-    <p> aqui deberian estar las pelis </p>
-    <p> ay hace falta un carrito </p> -->
+            <div class="peli_actor">
+              <img src="{{url_for('static', filename=item.foto)}}" class="peli_actor_foto"> 
+              <p class="peli_act_info"> {{item.personaje}} </p>
+              <p class="peli_act_info"> ({{item.nombre}}) </p>
+            </div>
+          {% endfor %}
+
+          </div>
+
+          <button>Añadir al carrito</button>
+          
+        </div>
+
+      </div>
+    {% endif%}
+  {% endfor %}
 
 
 {% endblock %}

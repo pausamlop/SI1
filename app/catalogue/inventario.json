@@ -2,22 +2,22 @@
     "peliculas": [
         {
             "id": 1,
-            "titulo": "Barbie en la princesa y la costurera",
+            "titulo": "Barbie: Fairytopia",
             "poster": "img/barbie.jpg",
             "director": "William Lau",
             "precio": 18.99,
             "categoria": "Animacion",
-            "anno": 2004,
+            "anno": 2005,
             "actores": [
                 {
                 "nombre": "Kelly Sheridan",
-                "personaje": "Princesa Anneliese",
-                "foto": "img/anneliese.jpg"
+                "personaje": "Elina",
+                "foto": "img/elina.jpg"
                 }, 
                 {
-                "nombre": "Kelly Sheridan",
-                "personaje": "Erika",
-                "foto": "img/erika.jpg"
+                "nombre": "Lee Tockar",
+                "personaje": "Bibble",
+                "foto": "img/bibble.jpg"
                 } 
             ]
 
@@ -40,12 +40,7 @@
                 "nombre": "Perla Liberatori",
                 "personaje": "Stella",
                 "foto": "img/stella.jpg"
-                },
-                {
-                "nombre": "Ilaria Latini",
-                "personaje": "Flora",
-                "foto": "img/flora.jpg"
-                }  
+                }
             ]
 
         },

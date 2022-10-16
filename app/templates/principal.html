@@ -37,7 +37,7 @@ principal
         {% for item in movies %}  
         <div class="polaroid">
         <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img" >
-        <a href="{{ url_for('pelicula') }}" class="polaroid_txt">{{item.titulo}} </a>
+        <a href="{{ url_for('pelicula', id=item.id) }}" class="polaroid_txt">{{item.titulo}} </a>
         </div>
         {% endfor %}
 
