@@ -41,14 +41,6 @@ def index():
 @app.route('/acceso', methods=['GET', 'POST'])
 def acceso():
 
-    usuario = request.form['usuario']
-    email = request.form['email']
-    tarjeta = request.form['tarjeta']
-    direccion = request.form['direccion']
-    pass1 = request.form['pass1']
-    saldo = random.randint(0, 50)
-    
-    
     
     # # doc sobre request object en http://flask.pocoo.org/docs/1.0/api/#incoming-request-data
     # if 'username' in request.form:
@@ -78,6 +70,14 @@ def showregistro():
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
 
+    usuario = request.form['usuario']
+    email = request.form['email']
+    tarjeta = request.form['tarjeta']
+    direccion = request.form['direccion']
+    pass1 = request.form['pass1']
+    saldo = random.randint(0, 50)
+    
+    
     
     return redirect(url_for('principal'))
 

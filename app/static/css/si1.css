@@ -249,7 +249,8 @@ div.polaroid {
 
 
 /************************** FORM DEL INICIO DE SESION *****************************************/
-form{overflow-y: scroll;
+form{
+  overflow-y: scroll;
   font-family: 'Roboto';
   background: #ff7e5f;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);  /* Chrome 10-25, Safari 5.1-6 */
