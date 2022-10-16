@@ -248,7 +248,7 @@ div.polaroid {
 
 
 
-/*** FORM DEL INICIO DE SESION***/
+/************************** FORM DEL INICIO DE SESION *****************************************/
 form{overflow-y: scroll;
   font-family: 'Roboto';
   background: #ff7e5f;  /* fallback for old browsers */
@@ -280,6 +280,42 @@ form .grupo{
   position: relative;
   margin: 45px ;
 }
+
+/********************* Para la barra de fortaleza ***************************/
+
+.progress {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 1rem;
+  overflow: hidden;
+  font-size: 0.75rem;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+  position: relative;
+  margin: 45px ;
+}
+
+.progress-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  background-color: #007bff;
+  transition: width 0.6s ease;
+  background-color: green;
+}
+
+
+/********************** Fin barra fortaleza ****************************/
 
 input{
   background: none;

@@ -6,6 +6,7 @@ from flask import render_template, request, url_for, redirect, session
 import json
 import os
 import sys
+import random
 
 @app.route('/')
 @app.route('/principal', methods=['GET', 'POST'])
@@ -39,6 +40,16 @@ def index():
 
 @app.route('/acceso', methods=['GET', 'POST'])
 def acceso():
+
+    usuario = request.form['usuario']
+    email = request.form['email']
+    tarjeta = request.form['tarjeta']
+    direccion = request.form['direccion']
+    pass1 = request.form['pass1']
+    saldo = random.randint(0, 50)
+    
+    
+    
     # # doc sobre request object en http://flask.pocoo.org/docs/1.0/api/#incoming-request-data
     # if 'username' in request.form:
     #     # aqui se deberia validar con fichero .dat del usuario
@@ -66,6 +77,8 @@ def showregistro():
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
+
+    
     return redirect(url_for('principal'))
 
     
