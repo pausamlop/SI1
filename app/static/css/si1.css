@@ -116,43 +116,26 @@ footer {
   overflow-y: scroll;
 }
 
-.princip_cabecera{
-  background: #fff;
-  padding: 2% 1%;
-  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
-  border-radius: 20px;
-  width: 90%;
-  height: 6%;
-  margin: 40px auto;
-
+#princip_form{
+  padding:2% 2%;
+  width: 45%;
+  height: 14%;
 }
 
-.princip_busqueda {
-  margin: 0.5% ;
-  position: relative;
-  width: 40%;
-  float: left;
-}
 
 .princip_filtro {
-  position: relative;
-  
+  font-family:"Roboto";
+  margin-top: 4%;
+  width: 55%;
+  font-size: 120%;
+  border-color: #c6c6c6 ;
+  margin-left: 2%;
 }
 
-.princip_button{
-  font-family: 'roboto';
-  background: #ff7e5f;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #feb47b, #ff7e5f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  border: none;
-  display: block;
-  width: 15%;
-  margin: 10px auto;
-  color: #fff;
-  height: 40px;
-  font-size: 16px;
-  cursor: pointer;
-  
+#princip_button{
+  margin-top: -5%;
+  width: 35%;
+  margin-left: 63%;
 }
 
 div.polaroid {

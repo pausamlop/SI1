@@ -6,33 +6,26 @@ principal
 
 {% block content %}
 
-    <div class="princip"> 
+    <form action="{{ url_for('busqueda') }}", method="POST", id="form" >
 
-        <div class="princip_cabecera">
-
-            <div class="princip_busqueda">
-                <input type="text" name="" id="name" required><span class="barra"></span>
-                <label for="">Búsqueda</label>
-            </div>
-
-            <!-- <div class="princip_filtro">
-
-                <input type="search" name="buscador" placeholder="Titulo">
+        <!-- busqueda y filtros -->
+        <div id="princip_form" class="form">
             
-                <select name="filtro" id="filtro">
-                    <option value="a"> </option>
-                    <option value="b">Miedo</option>
-                    <option value="c">Amor</option>
-                    <option value="d">Misterio</option>
-                </select>
+            <input type="text" name="buscar" placeholder="Busqueda"><span class="barra"></span>            
+        
+            <select name="filtro" id="filtro" class="princip_filtro">
+                <option class="princip_filtro" value=""></option>
+                <option class="princip_filtro" value="M">Musical</option>
+                <option class="princip_filtro" value="A">Animación</option>
+                <option class="princip_filtro" value="F">Fantasia</option>
+                <option class="princip_filtro" value="T">Terror</option>
+            </select>
+            
+            <button id="princip_button" type="submit">Buscar</button>
 
-                
-            </div> -->
-
-            <button class="princip_button" type="submit">Buscar</button>
 
         </div>
-        
+
         <!-- imprimir los posters con su fondo y titulo -->
         {% for item in movies %}  
         <div class="polaroid">
@@ -41,5 +34,7 @@ principal
         </div>
         {% endfor %}
 
-    </div>
+    </form>
+
+    
 {% endblock %}

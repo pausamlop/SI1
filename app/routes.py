@@ -31,6 +31,24 @@ def pelicula(id):
     return render_template('pelicula.html', title = "Pelicula", movie_id=id, movies=catalogue['peliculas'])
 
 
+# BUSQUEDA DE PELICULAS
+@app.route('/busqueda', methods=['POST'])
+def busqueda():
+    # cargar catalogo de peliculas
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    # buscar en los catalogos y anadir las peliculas con coincidencias
+    coincidencias = list()
+    for k in catalogue['peliculas']:
+        # busqueda y filtro
+        if (request.form['buscar'] in k["titulo"]) and (request.form['filtro'] in k["categoria"]):
+            coincidencias.append(k)
+
+    # redirigir a la pagina principal mostrando solo las coincidencias
+    return render_template('principal.html', title = "Pelicula", movie_id=id, movies=coincidencias)
+
+
 @app.route('/index')
 def index():
     print (url_for('static', filename='css/si1.css'), file=sys.stderr)
