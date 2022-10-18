@@ -24,12 +24,13 @@ principal
         <button id="princip_button" type="submit">Buscar</button>
 
 
-    </div>
-
-    <!-- imprimir los posters con su fondo y titulo -->
-    {% for item in movies %}
-    <div class="polaroid">
-        <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img">
+        </div>
+        
+        <!-- imprimir los posters con su fondo y titulo -->
+        {% for item in movies %}  
+        <div class="polaroid">
+            
+        <a href="{{ url_for('pelicula', id=item.id) }}"><img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img" ></a>
         <a href="{{ url_for('pelicula', id=item.id) }}" class="polaroid_txt">{{item.titulo}} </a>
     </div>
     {% endfor %}

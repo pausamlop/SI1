@@ -33,21 +33,36 @@ header {
   font-family: "Roboto";
 }
 
-/*** ICONO DE USUARIO ***/
-#usuario {
+.saludo{
   position: fixed;
-  right: 30px;
-  float: right;
-  max-height: 40px;
+  left: 2%;
+  top: 5%;
+  font-family: 'roboto';
+  font-size: 130%;
+  color: #ff7e5f;
+}
+
+
+
+/*** ICONO DE USUARIO ***/
+#img_usuario {
+	position: fixed;
+  /* right: 30px;
+	float: right; */
+  right: 2%;
+  top: 4%;
+	max-height: 40px;
 }
 
 
 /*** ICONO CARRITO ***/
-#carrito {
+#img_carrito {
   position: fixed;
-  right: 90px;
-  float: right;
-  max-height: 40px;
+  right: 7%;
+  top: 4%;
+  /* right: 90px; */
+	/* float: right; */
+	max-height: 40px;
 }
 
 
@@ -86,7 +101,7 @@ a {
 
 
 /*** FOOTER ***/
-footer {
+footer {os.mkdir(path_compras)
   /* fondo */
   height: 5%;
   position: absolute;
@@ -411,8 +426,24 @@ button {
   cursor: pointer;
 }
 
-@media screen and (max-width:500px) {
-  form {
-    width: 80%;
+
+.error{
+  border: 1px solid;
+  margin: 10px 0px;
+  padding:15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:13px;
+  text-align:left;
+  width:auto;
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
+
+@media screen and (max-width:500px){
+  form{
+      width: 80%;
   }
 }

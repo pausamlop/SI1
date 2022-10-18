@@ -1,14 +1,14 @@
 #!/usr/bin/python
 import os
+from pathlib import Path
 
-public_html = os.system("cd ..")
-public_html_path = os.getcwd("cd ..")
-print ("Current working directory %s" % public_html_path)
+usuario="Elena"
+app = os.getcwd()
+print ("Current working directory %s" % app)
+app_path=Path(app)
+public_html_path=Path(app_path.parent)
+print(public_html_path)
 
-# si1users_path=os.path.join(public_html, 'si1users')
-# os.chdir(si1users_path)
+path_user=os.path.join(public_html_path, usuario)
+print(path_user)
 
-# # Check current working directory.
-# retval = os.getcwd()
-
-# print ("Directory changed successfully %s" % retval)

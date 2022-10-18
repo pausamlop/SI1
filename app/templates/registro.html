@@ -12,12 +12,11 @@ registro
     <div class="form">
         <h1>Registro</h1>
 
-        <div class="grupo">
-            <input type="text" name="" id="username" minlength="5" pattern="[A-Za-z0-9]+" required><span
-                class="barra"></span>
-            <label for="">Usuario</label>
-        </div>
-
+            <div class="grupo">
+                <input type="text" name="username" id="username" minlength="5" pattern="[A-Za-z0-9]+" required><span class="barra"></span>
+                <label for="">Usuario</label>
+            </div>
+        
 
         <div class="grupo">
             <input type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
@@ -25,44 +24,45 @@ registro
             <label for="">Email</label>
         </div>
 
-        <div class="grupo">
-            <input type="number" name="" id="tarjeta" required><span class="barra"></span>
-            <label for="">Tarjeta de crédito</label>
-        </div>
-
-        <div class="grupo">
-            <input type="text" name="" id="direccion" maxlength="50" required><span class="barra"></span>
-            <label for="">Dirección de envío</label>
-        </div>
-
-        <div class="grupo">
-            <input type="password" name="" id="pass1" minlength="6" required><span class="barra"></span>
-            <label for="">Contraseña</label>
-        </div>
-
-        <!-- Aqui vamos a comprobar la fortaleza de la contraeña -->
-
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-        <script src="../static/javascript/jquery.min.js"></script>
-        <!-- <script src="../static/javascript/css/bootstrap.min.css"></script> -->
-        <script type="text/javascript" src="../static/javascript/fortalezaclave.js"></script>
-
-        <!--Hemos añadido las bibliotecas necesaria para implementar la barra d fortaleza-->
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-                style="width:0%">
+            <div class="grupo">
+                <input type="number" name="tarjeta" id="tarjeta" required><span class="barra"></span>
+                <label for="">Tarjeta de crédito</label>
             </div>
+
+            <div class="grupo">
+                <input type="text" name="direccion" id="direccion" maxlength="50" required><span class="barra"></span>
+                <label for="">Dirección de envío</label>
+            </div>
+
+            <div class="grupo">
+                <input type="password" name="pass1" id="pass1" minlength="6" required><span class="barra"></span>
+                <label for="">Contraseña</label>
+            </div>
+
+            <!-- Aqui vamos a comprobar la fortaleza de la contraeña -->
+            <script src="../static/javascript/jquery.min.js"></script>
+            <script type="text/javascript" src="../static/javascript/fortalezaclave.js"></script>
+            
+            <!--Hemos añadido las bibliotecas necesaria para implementar la barra d fortaleza-->
+                <div class="progress">
+                    <div class="progress-bar" 
+                            role="progressbar" 
+                            aria-valuenow="0"
+                            aria-valuemin="0" 
+                            aria-valuemax="100"
+                            style="width:0%">
+                    </div>
+                </div> 
+
+
+            <div class="grupo">
+                <input type="password" name="pass2" id="pass2" minlength="6" required><span class="barra"></span>
+                <label for="">Repetir contraseña</label>
+            </div>
+            
+            
+            <button type="submit">Crear cuenta</button>
         </div>
-
-
-        <div class="grupo">
-            <input type="password" name="" id="pass2" minlength="6" required><span class="barra"></span>
-            <label for="">Repetir contraseña</label>
-        </div>
-
-
-        <button type="submit">Crear cuenta</button>
-    </div>
 
 
 </form>

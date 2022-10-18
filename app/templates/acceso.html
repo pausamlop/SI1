@@ -4,20 +4,38 @@
 acceso
 {% endblock%}
 
+
 {% block content %}
-<form action="{{ url_for('acceso') }}" method="POST" id="form">
-    <div class="form">
-        <h1>Inicio sesión</h1>
-        <div class="grupo">
-            <input type="text" name="" id="name" required><span class="barra"></span>
-            <label for="">Nombre</label>
-        </div>
-        <div class="grupo">
-            <input type="password" name="" id="pass" required><span class="barra"></span>
-            <label for="">Contraseña</label>
-        </div>
+
+<!-- {% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         <h1 style="background-color:tomato">{{ message }}</style></h1>
+      {% endfor %}
+   {% endif %}
+{% endwith %} -->
+
+
+
+
+    <form action="{{ url_for('acceso') }}" method="POST" id="form">
+        <div class="form">
+            <h1>Inicio sesión</h1>
+            <div class="grupo">
+                <input type="text" name="username" id="username" required><span class="barra"></span>
+                <label for="">Nombre</label>
+            </div>
+            <div class="grupo">
+                <input type="password" name="pass" id="pass" required><span class="barra"></span>
+                <label for="">Contraseña</label>
+            </div>
 
         <button type="submit">Log in</button>
     </div>
 </form>
 {% endblock %}
+
+
+<!-- {% if error %}
+<p class=error><strong>Error:</strong> {{ error }}
+{% endif %} -->
