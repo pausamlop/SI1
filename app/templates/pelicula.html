@@ -6,46 +6,84 @@ pelicula
 
 {% block content %}
 
-  {% for item in movies %}  
-    {% if item.id == movie_id %}
-      <div class="princip"> <!-- CLASE FONDO  -->
-        <img src="{{url_for('static', filename=item.poster)}}" class="peli_poster">
-        <div class="peli_form">
-          <h1>{{item.titulo}}</h1>
-          
-          <ul>
-            <br>
-            <li><p class="peli_info">Precio: {{item.precio}} </p></li>
-            <br>
-            <li><p class="peli_info">Director: {{item.director}}</p></li>
-            <br>
-            <li><p class="peli_info">Categoria: {{item.categoria}}</p></li>
-            <br>
-            <li><p class="peli_info">Año: {{item.anno}}</p></li>
-            <br>
-            <li><p class="peli_info">Actores: </p></li>
-          </ul>
+{% for item in movies %}
+{% if item.id == movie_id %}
+<div class="princip">
+  <!-- CLASE FONDO  -->
+  <img src="{{url_for('static', filename=item.poster)}}" class="peli_poster">
+  <div class="peli_form">
+    <h1>{{item.titulo}}</h1>
 
-          <div class="peli_act">
-            
-          {% for item in item.actores %}  
 
-            <div class="peli_actor">
-              <img src="{{url_for('static', filename=item.foto)}}" class="peli_actor_foto"> 
-              <p class="peli_act_info"> {{item.personaje}} </p>
-              <p class="peli_act_info"> ({{item.nombre}}) </p>
-            </div>
-          {% endfor %}
+    <ul>
+      <br>
+      <li>
+        <p class="peli_info">Precio: {{item.precio}} </p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Director: {{item.director}}</p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Categoria: {{item.categoria}}</p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Año: {{item.anno}}</p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Actores: </p>
+      </li>
+    </ul>
 
-          </div>
+    <div class="peli_act">
 
-          <button>Añadir al carrito</button>
-          
-        </div>
+      {% for item in item.actores %}
 
+      <div class="peli_actor">
+        <img src="{{url_for('static', filename=item.foto)}}" class="peli_actor_foto">
+        <p class="peli_act_info"> {{item.personaje}} </p>
+        <p class="peli_act_info"> ({{item.nombre}}) </p>
       </div>
-    {% endif%}
-  {% endfor %}
+      {% endfor %}
+
+    </div>
+
+    <button>Añadir al carrito</button>
+
+    <!-- estrellas -->
+    <div class="peli_opinion">
+      <p> {{item.numero_valoraciones}} usuarios han valorado esta pelicula.</p>
+      <p> La valoracion media es de {{item.valoracion_media}} estrellas.</p>
+      <p> Danos tu opinion: </p>
+      <p class="estrellas">
+        <input id="radio1" type="radio" name="estrellas" value="5">
+        <label for="radio1">HOLA</label>
+        <input id="radio2" type="radio" name="estrellas" value="4">
+        <label for="radio2">★</label>
+        <input id="radio3" type="radio" name="estrellas" value="3">
+        <label for="radio3">★</label>
+        <input id="radio4" type="radio" name="estrellas" value="2">
+        <label for="radio4">★</label>
+        <input id="radio5" type="radio" name="estrellas" value="1">
+        <label for="radio5">★</label>
+      </p>
+    </div>
+
+
+
+
+    
+
+
+
+  </div>
+
+</div>
+{% endif%}
+{% endfor %}
 
 
 {% endblock %}

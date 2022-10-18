@@ -6,35 +6,35 @@ principal
 
 {% block content %}
 
-    <form action="{{ url_for('busqueda') }}", method="POST", id="form" >
+<form action="{{ url_for('busqueda') }}" , method="POST" , id="form">
 
-        <!-- busqueda y filtros -->
-        <div id="princip_form" class="form">
-            
-            <input type="text" name="buscar" placeholder="Busqueda"><span class="barra"></span>            
-        
-            <select name="filtro" id="filtro" class="princip_filtro">
-                <option class="princip_filtro" value=""></option>
-                <option class="princip_filtro" value="M">Musical</option>
-                <option class="princip_filtro" value="A">Animación</option>
-                <option class="princip_filtro" value="F">Fantasia</option>
-                <option class="princip_filtro" value="T">Terror</option>
-            </select>
-            
-            <button id="princip_button" type="submit">Buscar</button>
+    <!-- busqueda y filtros -->
+    <div id="princip_form" class="form">
+
+        <input type="text" name="buscar" placeholder="Busqueda"><span class="barra"></span>
+
+        <select name="filtro" id="filtro" class="princip_filtro">
+            <option class="princip_filtro" value=""></option>
+            <option class="princip_filtro" value="M">Musical</option>
+            <option class="princip_filtro" value="A">Animación</option>
+            <option class="princip_filtro" value="F">Fantasia</option>
+            <option class="princip_filtro" value="T">Terror</option>
+        </select>
+
+        <button id="princip_button" type="submit">Buscar</button>
 
 
-        </div>
+    </div>
 
-        <!-- imprimir los posters con su fondo y titulo -->
-        {% for item in movies %}  
-        <div class="polaroid">
-        <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img" >
+    <!-- imprimir los posters con su fondo y titulo -->
+    {% for item in movies %}
+    <div class="polaroid">
+        <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img">
         <a href="{{ url_for('pelicula', id=item.id) }}" class="polaroid_txt">{{item.titulo}} </a>
-        </div>
-        {% endfor %}
+    </div>
+    {% endfor %}
 
-    </form>
+</form>
 
-    
+
 {% endblock %}

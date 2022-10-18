@@ -2,7 +2,9 @@
 * {
   margin: 0;
 }
-html, body {
+
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
@@ -11,7 +13,7 @@ html, body {
 /************************ FRAME ************************/
 
 
-iframe{
+iframe {
   /* tamano */
   height: 100%;
   width: 100%;
@@ -20,7 +22,7 @@ iframe{
 /*** HEADER ***/
 header {
   /* fondo */
-  background-color:rgb(255,212,201);
+  background-color: rgb(255, 212, 201);
   height: 14%;
   /* texto */
   display: flex;
@@ -28,15 +30,15 @@ header {
   align-items: center;
   color: #ff7e5f;
   font-size: 130%;
-  font-family:"Roboto";
+  font-family: "Roboto";
 }
 
 /*** ICONO DE USUARIO ***/
 #usuario {
-	position: fixed;
+  position: fixed;
   right: 30px;
-	float: right;
-	max-height: 40px;
+  float: right;
+  max-height: 40px;
 }
 
 
@@ -44,8 +46,8 @@ header {
 #carrito {
   position: fixed;
   right: 90px;
-	float: right;
-	max-height: 40px;
+  float: right;
+  max-height: 40px;
 }
 
 
@@ -55,8 +57,8 @@ header {
   height: 81%;
   position: absolute;
   bottom: 5%;
-  width:15%;
-  background-color: rgb(198,229,177);
+  width: 15%;
+  background-color: rgb(198, 229, 177);
   /* texto */
   display: flex;
   justify-content: center;
@@ -67,16 +69,17 @@ header {
 /*** NAV DEL MENU ***/
 nav {
   position: sticky;
-	font-size: 20px;;
-	font-family: "Roboto";
-	text-align: left;
+  font-size: 20px;
+  ;
+  font-family: "Roboto";
+  text-align: left;
   padding-right: 70px;
   padding-top: 10px;
- 
+
 
 }
 
-a{
+a {
   color: #b1472d;
 }
 
@@ -88,14 +91,14 @@ footer {
   height: 5%;
   position: absolute;
   bottom: 0%;
-  width:100%;
-  background-color: rgb(255,212,201);
+  width: 100%;
+  background-color: rgb(255, 212, 201);
   /* texto */
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 90%;
-  font-family:"Helvetica";
+  font-family: "Helvetica";
 }
 
 /************************ PRINCIPAL ************************/
@@ -106,40 +109,43 @@ footer {
   position: absolute;
   bottom: 5%;
   margin-left: 15%;
-  width:85%;
-  background: #ff7e5f;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #feb47b, #ff7e5f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
+  width: 85%;
+  background: #ff7e5f;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #feb47b, #ff7e5f);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   /* disposicion */
   /* display: flex; */
   overflow-y: scroll;
 }
 
-#princip_form{
-  padding:2% 2%;
+#princip_form {
+  padding: 2% 2%;
   width: 45%;
   height: 14%;
 }
 
 
 .princip_filtro {
-  font-family:"Roboto";
+  font-family: "Roboto";
   margin-top: 4%;
   width: 55%;
   font-size: 120%;
-  border-color: #c6c6c6 ;
+  border-color: #c6c6c6;
   margin-left: 2%;
 }
 
-#princip_button{
+#princip_button {
   margin-top: -5%;
   width: 35%;
   margin-left: 63%;
 }
 
 div.polaroid {
-  
+
   width: 20%;
   height: 60%;
   border-radius: 3%;
@@ -153,34 +159,34 @@ div.polaroid {
 
 }
 
-.polaroid_img{
+.polaroid_img {
   width: 90%;
   height: 80%;
   border-radius: 3%;
   margin-top: 5%;
 }
 
-.polaroid_txt{
+.polaroid_txt {
   margin-top: 3%;
   font-size: 150%;
-  font-family:"Roboto";
+  font-family: "Roboto";
   color: #b1472d;
 
 }
 
 /************************ PELICULA ************************/
 
-.peli_poster{
+.peli_poster {
   width: 25%;
   height: 68%;
   margin-top: 4%;
   margin-left: 4%;
   border-radius: 3%;
-  position:fixed;
+  position: fixed;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.peli_form{
+.peli_form {
   background: #fff;
   padding: 50px 10px;
   box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
@@ -193,21 +199,21 @@ div.polaroid {
   overflow-y: sticky;
 }
 
-.peli_info{
+.peli_info {
 
   margin-right: 4%;
   margin-top: 2%;
   font-family: 'roboto';
-  font-size: 150%;
+  font-size: 120%;
 }
 
-.peli_actor{
+.peli_actor {
 
   margin-left: 10%;
   margin-top: 5%;
   margin-bottom: 5%;
-  width:35%;
-  height:50%;
+  width: 35%;
+  height: 50%;
   float: left;
 }
 
@@ -216,42 +222,73 @@ div.polaroid {
   font-family: 'roboto';
 }
 
-.peli_actor_foto{
-  width:90%;
-  height:90%;
+.peli_actor_foto {
+  width: 90%;
+  height: 90%;
   border-radius: 3%;
   box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
 
 }
 
+.peli_opinion{
+  margin-top: 4%;
+  text-align: center;
+  font-family: 'roboto';
+  color: #b1472d;
+  
 
+}
 
+/* p.clasificacion {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
 
+p.clasificacion input {
+  position: absolute;
+  top: -100px;
+}
+
+p.clasificacion label {
+  float: right;
+  color: #333;
+}
+
+p.clasificacion label:hover,
+p.clasificacion label:hover ~ label,
+p.clasificacion input:checked ~ label {
+  color: #dd4;
+} */
 
 
 
 
 /************************** FORM DEL INICIO DE SESION *****************************************/
-form{
+form {
   overflow-y: scroll;
   font-family: 'Roboto';
-  background: #ff7e5f;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #feb47b, #ff7e5f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #ff7e5f;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #feb47b, #ff7e5f);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   height: 82%;
   position: absolute;
   bottom: 4%;
   margin-left: 15%;
-  width:85%;
+  width: 85%;
 }
 
-h1{
+h1 {
   text-align: center;
   position: relative;
   font-weight: 700;
 }
 
-.form{
+
+.form {
   background: #fff;
   padding: 50px 10px;
   box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
@@ -260,9 +297,9 @@ h1{
   margin: 40px auto;
 }
 
-form .grupo{
+form .grupo {
   position: relative;
-  margin: 45px ;
+  margin: 45px;
 }
 
 /********************* Para la barra de fortaleza ***************************/
@@ -277,7 +314,7 @@ form .grupo{
   background-color: #e9ecef;
   border-radius: 0.25rem;
   position: relative;
-  margin: 45px ;
+  margin: 45px;
 }
 
 .progress-bar {
@@ -301,7 +338,7 @@ form .grupo{
 
 /********************** Fin barra fortaleza ****************************/
 
-input{
+input {
   background: none;
   color: #c6c6c6;
   font-size: 18px;
@@ -312,12 +349,12 @@ input{
   border-bottom: 1px solid #49454567;
 }
 
-input:focus{ 
+input:focus {
   outline: none;
   color: #5e5d5d;
 }
 
-label{
+label {
   color: #49454567;
   font-size: 16px;
   position: absolute;
@@ -328,19 +365,19 @@ label{
 }
 
 input:focus~label,
-input:valid~label{
+input:valid~label {
   top: -14px;
   font-size: 12px;
-  color: black; 
+  color: black;
 }
 
-.barra{
+.barra {
   position: relative;
   display: block;
   width: 100%;
 }
 
-.barra::before{
+.barra::before {
   content: "";
   height: 2px;
   width: 0%;
@@ -351,16 +388,19 @@ input:valid~label{
   left: 0;
 }
 
-input:focus~.barra::before{
+input:focus~.barra::before {
   width: 100%;
 }
 
 
-button{
+button {
   font-family: 'roboto';
-  background: #ff7e5f;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #feb47b, #ff7e5f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #ff7e5f;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #feb47b, #ff7e5f);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: none;
   display: block;
   width: 80%;
@@ -371,8 +411,8 @@ button{
   cursor: pointer;
 }
 
-@media screen and (max-width:500px){
-  form{
-      width: 80%;
+@media screen and (max-width:500px) {
+  form {
+    width: 80%;
   }
 }

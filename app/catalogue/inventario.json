@@ -19,7 +19,9 @@
                 "personaje": "Bibble",
                 "foto": "img/bibble.jpg"
                 } 
-            ]
+            ],
+            "numero_valoraciones": 8,
+            "valoracion_media": 4.3
 
         },
         {
@@ -41,7 +43,9 @@
                 "personaje": "Stella",
                 "foto": "img/stella.jpg"
                 }
-            ]
+            ],
+            "numero_valoraciones": 15,
+            "valoracion_media": 3
 
         },
         {
@@ -63,7 +67,9 @@
                 "personaje": "Shane Gray",
                 "foto": "img/shane.jpg"
                 }
-            ]
+            ],
+            "numero_valoraciones": 128,
+            "valoracion_media": 5
 
         },
         {
@@ -80,7 +86,9 @@
                 "personaje": "Regan",
                 "foto": "img/regan.jpg"
                 }
-            ]
+            ],
+            "numero_valoraciones": 28,
+            "valoracion_media": 2.1
 
         }  
 
