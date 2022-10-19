@@ -6,9 +6,16 @@ registro
 
 
 {% block content %}
+
+{% if error %}
+    <script>
+        showerror("{{error}}");
+    </script>
+{% endif %}
+
 <form action="{{ url_for('registro') }}" method="POST" id="formregistro">
 
-
+    
     <div class="form">
         <h1>Registro</h1>
 
@@ -40,10 +47,9 @@ registro
             </div>
 
             <!-- Aqui vamos a comprobar la fortaleza de la contraeña -->
-            <script src="../static/javascript/jquery.min.js"></script>
             <script type="text/javascript" src="../static/javascript/fortalezaclave.js"></script>
-            
-            <!--Hemos añadido las bibliotecas necesaria para implementar la barra d fortaleza-->
+             
+        
                 <div class="progress">
                     <div class="progress-bar" 
                             role="progressbar" 
@@ -67,9 +73,7 @@ registro
 
 </form>
 
-<script src="../static/javascript/jquery.min.js"></script>
 <script type="text/javascript" src="../static/javascript/registro.js"></script>
-
-
+ 
 
 {% endblock %}

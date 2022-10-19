@@ -40,6 +40,18 @@ header {
   font-family: 'roboto';
   font-size: 130%;
   color: #ff7e5f;
+
+
+}
+
+.connect{
+  position: absolute;
+  left: 5%;
+  bottom: 2%;
+  padding: 2px;
+  font-family: 'roboto';
+  font-size: 90%;
+  color: #b1472d;
 }
 
 
@@ -452,20 +464,27 @@ button {
   cursor: pointer;
 }
 
-
-.error{
-  border: 1px solid;
-  margin: 10px 0px;
-  padding:15px 10px 15px 50px;
-  background-repeat: no-repeat;
-  background-position: 10px center;
-  font-family:Arial, Helvetica, sans-serif;
-  font-size:13px;
-  text-align:left;
-  width:auto;
-  color: #D8000C;
-  background-color: #FFBABA;
+/***************************** TABLA HISTORIAL ********************************/
+table {
+  width: 100%;
+  border: 1px solid #999;
+  text-align: left;
+  border-collapse: collapse;
+  margin: 0 0 1em 0;
+  caption-side: top;
 }
+caption, td, th {
+  padding: 0.3em;
+}
+th, td {
+  border-bottom: 1px solid #999;
+  width: 25%;
+}
+caption {
+  font-weight: bold;
+  font-style: italic;
+}
+
 
 
 @media screen and (max-width:500px){

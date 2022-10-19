@@ -227,6 +227,14 @@ def eliminarcarrito(id):
 
 
 
+@app.route('/historialcompras', methods=['GET', 'POST'])
+def historialcompras():
+    return render_template('historialcompras.html', title = "Historial")
+
+@app.route('/usu_conectados', methods=['GET', 'POST'])
+def usu_conectados():
+    return str(random.randint(1, 50))
+
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('usuario', None)
