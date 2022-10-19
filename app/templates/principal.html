@@ -11,7 +11,7 @@ principal
     <!-- busqueda y filtros -->
     <div id="princip_form" class="form">
 
-        <input type="text" name="buscar" placeholder="Busqueda"><span class="barra"></span>
+        <input type="text" name="buscar" placeholder="Busqueda" class="input1"><span class="barra"></span>
 
         <select name="filtro" id="filtro" class="princip_filtro">
             <option class="princip_filtro" value=""></option>
@@ -24,16 +24,18 @@ principal
         <button id="princip_button" type="submit">Buscar</button>
 
 
-        </div>
-        
-        <!-- imprimir los posters con su fondo y titulo -->
-        {% for item in movies %}  
-        <div class="polaroid">
-            
-        <a href="{{ url_for('pelicula', id=item.id) }}"><img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img" ></a>
-        <a href="{{ url_for('pelicula', id=item.id) }}" class="polaroid_txt">{{item.titulo}} </a>
     </div>
+
+    <!-- imprimir los posters con su fondo y titulo -->
+    {% for item in movies %}
+    <a href="{{ url_for('pelicula', id=item.id) }}">
+        <div class="polaroid">
+            <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img">
+            <h1 class="polaroid_txt">{{item.titulo}} </h1>
+        </div>
+    </a>
     {% endfor %}
+
 
 </form>
 

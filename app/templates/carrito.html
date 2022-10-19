@@ -5,21 +5,27 @@ carrito
 {% endblock%}
 
 {% block content %}
-    <!-- <h1 class="center"> La Fantastica Tienda de Peliculas </h1>
-    <h2>elena y paula te ofrecen esta seleccion de dvds</h2>
 
-    <input type="search" name="buscador" placeholder="Titulo">
-    <input type="submit" value="Buscar">
+<form action="{{ url_for('registro') }}" method="POST">
+  <h1 class="carrito_txt"> FINALIZAR COMPRA </h1>
+  <!-- <button>Añadir al carrito</button> -->
+  <a href="{{ url_for('principal') }}" class="fin_compra" id="fin_compra_detalles"><input type="button" value="Pagar" class="fin_compra"></a>
 
-    <select name="filtro" id="filtro">
-        <option value="a"> </option>
-        <option value="b">Miedo</option>
-        <option value="c">Amor</option>
-        <option value="d">Misterio</option>
-      </select>
+  <!-- imprimir los posters con su fondo y titulo -->
+  {% for item in movies %}
+  <div class="polaroid">
 
-    <p> aqui deberian estar las pelis </p>
-    <p> ay hace falta un carrito </p> -->
+      <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img">
+      <h1 class="polaroid_txt">{{item.titulo}} </h1>
+      <a href="{{ url_for('eliminarcarrito', id=item.id) }}" class="eliminar_boton"><input type="button" value="eliminar" class="eliminar_txt"></a>
+  </div>
+  
+  {% endfor %}
+
+      
+
+
+</form>
 
 
 {% endblock %}

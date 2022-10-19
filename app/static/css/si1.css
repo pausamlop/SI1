@@ -101,7 +101,7 @@ a {
 
 
 /*** FOOTER ***/
-footer {os.mkdir(path_compras)
+footer {
   /* fondo */
   height: 5%;
   position: absolute;
@@ -138,9 +138,9 @@ footer {os.mkdir(path_compras)
 }
 
 #princip_form {
-  padding: 2% 2%;
   width: 45%;
   height: 14%;
+  padding: 2% 2%;
 }
 
 
@@ -161,14 +161,15 @@ footer {os.mkdir(path_compras)
 
 div.polaroid {
 
-  width: 20%;
-  height: 60%;
+  width: 300px;
+  height: 550px;
   border-radius: 3%;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-top: 4%;
-  margin-left: 10%;
-  margin-bottom: 3%;
+  margin-left: 150px;
+  
+  margin-bottom: 5%;
   float: left;
   text-align: center;
 
@@ -176,7 +177,7 @@ div.polaroid {
 
 .polaroid_img {
   width: 90%;
-  height: 80%;
+  height: 78%;
   border-radius: 3%;
   margin-top: 5%;
 }
@@ -188,6 +189,8 @@ div.polaroid {
   color: #b1472d;
 
 }
+
+
 
 /************************ PELICULA ************************/
 
@@ -222,62 +225,85 @@ div.polaroid {
   font-size: 120%;
 }
 
-.peli_actor {
-
-  margin-left: 10%;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  width: 35%;
-  height: 50%;
-  float: left;
-}
-
-.peli_act_info {
-  text-align: center;
-  font-family: 'roboto';
-}
-
-.peli_actor_foto {
-  width: 90%;
-  height: 90%;
-  border-radius: 3%;
-  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
-
-}
 
 .peli_opinion{
   margin-top: 4%;
   text-align: center;
   font-family: 'roboto';
   color: #b1472d;
-  
+}
+
+.peli_anadir{
+  font-family: 'roboto';
+  color: #fff;
+  position:sticky;
+  background: #ff7e5f;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #feb47b, #ff7e5f);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border: none;
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  height: 40px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration:none;
 
 }
 
-/* p.clasificacion {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
+
+/* valoracion */
+
+.valoracion{
+  text-align: center;
+  color: #b1472d;
 }
 
-p.clasificacion input {
-  position: absolute;
-  top: -100px;
+
+/************************** CARRITO *****************************************/
+.eliminar_txt{
+  font: red;
 }
 
-p.clasificacion label {
-  float: right;
-  color: #333;
+.carrito_txt{
+  margin-top: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 250%;
+  font-family: "Roboto";
 }
 
-p.clasificacion label:hover,
-p.clasificacion label:hover ~ label,
-p.clasificacion input:checked ~ label {
-  color: #dd4;
-} */
+.fin_compra{
+  font-family: 'roboto';
+  color:  #ff7e5f;
+  position:sticky;
+  background:#fff ;
 
+  border: none;
+  display: block;
+  width: 20%;
+  margin: 20px auto;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration:none;
+}
 
+#fin_compra_detalles{
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+}
 
+.eliminar_boton{
+  font-family: 'roboto';
+  text-decoration:none;
+  color:#D8000C;
+}
 
 /************************** FORM DEL INICIO DE SESION *****************************************/
 form {
@@ -353,7 +379,7 @@ form .grupo {
 
 /********************** Fin barra fortaleza ****************************/
 
-input {
+.input1 {
   background: none;
   color: #c6c6c6;
   font-size: 18px;
@@ -364,7 +390,7 @@ input {
   border-bottom: 1px solid #49454567;
 }
 
-input:focus {
+.input1:focus {
   outline: none;
   color: #5e5d5d;
 }
@@ -379,8 +405,8 @@ label {
   pointer-events: none;
 }
 
-input:focus~label,
-input:valid~label {
+.input1:focus~label,
+.input1:valid~label {
   top: -14px;
   font-size: 12px;
   color: black;
@@ -403,7 +429,7 @@ input:valid~label {
   left: 0;
 }
 
-input:focus~.barra::before {
+.input1:focus~.barra::before {
   width: 100%;
 }
 

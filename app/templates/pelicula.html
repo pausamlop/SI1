@@ -18,6 +18,10 @@ pelicula
     <ul>
       <br>
       <li>
+        <p class="peli_info">Sinopsis:<br> {{item.sinopsis}} </p>
+      </li>
+      <br>
+      <li>
         <p class="peli_info">Precio: {{item.precio}} </p>
       </li>
       <br>
@@ -34,48 +38,40 @@ pelicula
       </li>
       <br>
       <li>
-        <p class="peli_info">Actores: </p>
+        <p class="peli_info">Actores: {% for item in item.actores %} {{item.nombre}} {% endfor %}</p>
+        <br>
       </li>
     </ul>
 
-    <div class="peli_act">
 
-      {% for item in item.actores %}
 
-      <div class="peli_actor">
-        <img src="{{url_for('static', filename=item.foto)}}" class="peli_actor_foto">
-        <p class="peli_act_info"> {{item.personaje}} </p>
-        <p class="peli_act_info"> ({{item.nombre}}) </p>
-      </div>
-      {% endfor %}
-
-    </div>
-
-    <button>Añadir al carrito</button>
+    <!-- <button>Añadir al carrito</button> -->
+    <a href="{{ url_for('anadircarrito', id=item.id) }}" class="peli_anadir"><input type="button"
+        value="Añadir al carrito" class="peli_anadir"></a>
 
     <!-- estrellas -->
-    <div class="peli_opinion">
+
+    <div class="valoracion">
+
       <p> {{item.numero_valoraciones}} usuarios han valorado esta pelicula.</p>
       <p> La valoracion media es de {{item.valoracion_media}} estrellas.</p>
       <p> Danos tu opinion: </p>
-      <p class="estrellas">
-        <input id="radio1" type="radio" name="estrellas" value="5">
-        <label for="radio1">HOLA</label>
-        <input id="radio2" type="radio" name="estrellas" value="4">
-        <label for="radio2">★</label>
-        <input id="radio3" type="radio" name="estrellas" value="3">
-        <label for="radio3">★</label>
-        <input id="radio4" type="radio" name="estrellas" value="2">
-        <label for="radio4">★</label>
-        <input id="radio5" type="radio" name="estrellas" value="1">
-        <label for="radio5">★</label>
-      </p>
+      <br>
+
+      <a href="{{ url_for('valorar', id=item.id, val=1) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=2) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=3) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=4) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=5) }}"><input type="button" value="☆"></a>
+
     </div>
 
 
 
 
-    
+
+
+
 
 
 

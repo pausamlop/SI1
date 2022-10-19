@@ -27,12 +27,40 @@ def frame():
     # print (url_for(filename='/templates/frame.html'), file=sys.stderr)
     return render_template('frame.html', title = "Home")
 
+
+# VALORACION DE UNA PELICULA
+@app.route('/valorar/<int:id>/<int:val>')
+def valorar(id,val):
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    # encontrar peli a valorar
+    for k in catalogue['peliculas']:
+        if k["id"] == id:
+            # encontrar antigua valoracion
+            print('valoracion media:' + str(k["valoracion_media"]))
+            # encontrar numero de usuarios que han votado
+            print('numero valoraciones'+ str(k["numero_valoraciones"]))
+            # calcular nueva media con la valoracion = (antigua*usuarios + nueva)/usuarios+1
+            k['valoracion_media']= (float(k['valoracion_media'])*k["numero_valoraciones"]+val)/(k["numero_valoraciones"]+1)
+            k['valoracion_media']="{0:.2f}".format(k['valoracion_media'])
+            k["numero_valoraciones"]+=1
+
+            # actualizar catalogue
+            with open(os.path.join(app.root_path,'catalogue/inventario.json'), "w") as jf: 
+                json.dump(catalogue, jf)
+
+    print(id, val)
+    return redirect(url_for('pelicula', id=id))
+
+
+
+# PAGINA DE DETALLE DE LAS PELICULAS
 @app.route('/pelicula/<int:id>')
 def pelicula(id):
     catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     return render_template('pelicula.html', title = "Pelicula", movie_id=id, movies=catalogue['peliculas'])
-
 
 # BUSQUEDA DE PELICULAS
 @app.route('/busqueda', methods=['POST'])
@@ -45,11 +73,13 @@ def busqueda():
     coincidencias = list()
     for k in catalogue['peliculas']:
         # busqueda y filtro
-        if (request.form['buscar'] in k["titulo"]) and (request.form['filtro'] in k["categoria"]):
+        if (request.form['buscar'].lower() in k["titulo"].lower()) and (request.form['filtro'] in k["categoria"]):
             coincidencias.append(k)
 
     # redirigir a la pagina principal mostrando solo las coincidencias
     return render_template('principal.html', title = "Pelicula", movie_id=id, movies=coincidencias)
+
+
 
 
 @app.route('/index')
@@ -96,6 +126,7 @@ def acceso():
         return render_template('acceso.html', error=error, title = "Acceso")
     
     session['usuario']=usuario
+    session['carrito']=list()
     session.modified=True
 
     return redirect(url_for('principal'))
@@ -147,17 +178,58 @@ def registro():
 
     #Creamos la sesion del usuario
     session['usuario']=usuario
+    session['carrito']=list()
     session.modified = True
 
     return redirect(url_for('principal'))
 
 
+# PAGINA DEL CARRITO
 @app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
-    return render_template('carrito.html', title = "Registro")
+    # cargar catalogo de peliculas
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    # buscar las que estan en el carrito
+    carrito = list()
+    for j in session['carrito']:
+        for k in catalogue['peliculas']:
+            if k["id"] == j:
+                carrito.append(k)
+
+    # redirigir a la pagina principal mostrando solo las coincidencias
+    return render_template('carrito.html', title = "Pelicula", movies=carrito)
+
+
+# ANADIR PELICULA AL CARRITO
+@app.route('/anadircarrito/<int:id>')
+def anadircarrito(id):
+    # usuario anonimo
+    if not session.get('carrito'):
+        session['carrito']=list()
+    # anadir pelicula
+    session['carrito'].append(id)
+    session.modified=True
+
+    print(session['carrito'])
+
+    return redirect('/principal')
+
+
+# QUITAR PELICULA DEL CARRITO
+@app.route('/eliminarcarrito/<int:id>')
+def eliminarcarrito(id):
+    # quitar pelicula
+    session['carrito'].remove(id)
+    session.modified=True
+    return redirect('/carrito')
+
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('usuario', None)
+    session.pop('carrito', None)
     session.modified = True
     return redirect(url_for('principal'))
