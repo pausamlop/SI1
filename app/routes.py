@@ -310,10 +310,12 @@ def historialcompras():
     path_user=os.path.join(app_folder, "si1users", usuario)
 
     catalogue_data = open(os.path.join(path_user,'compras.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    
-    app_folder = os.getcwd()
-    path_user=os.path.join(app_folder, "si1users", usuario)
+
+    if not catalogue_data:
+        catalogue = {'peliculas':[]}
+    else:
+        catalogue = json.loads(catalogue_data)
+
     path_datos=os.path.join(path_user, "datos.dat")
 
     dat = open(path_datos, 'r' ,encoding='utf-8')
@@ -322,7 +324,9 @@ def historialcompras():
     saldo=saldo[0:(len(saldo)-1)]
     dat.close()
 
-    return render_template('historialcompras.html', title = "Historial", movies=catalogue['compras'], saldo=saldo)
+    saldo="{0:.2f}".format(float(saldo))
+
+    return render_template('historialcompras.html', title = "Historial", movies=catalogue['peliculas'], saldo=saldo)
 
 @app.route('/aumento_saldo', methods=['POST'])
 def aumento_saldo():
