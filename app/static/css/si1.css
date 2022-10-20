@@ -491,24 +491,84 @@ button {
 }
 
 /***************************** TABLA HISTORIAL ********************************/
-table {
-  width: 100%;
-  border: 1px solid #999;
-  text-align: left;
+
+.content-table {
+  width: 80%;
+  height: 40%;
   border-collapse: collapse;
-  margin: 0 0 1em 0;
-  caption-side: top;
+  margin: auto;
+  
+  font-size: 1em;
+  font-family: sans-serif;
+  min-width: 450px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
 }
-caption, td, th {
-  padding: 0.3em;
+
+caption{
+  color: #000000;
+  font-size: 220%;
+  font-family: "Roboto";
+  margin-top:1%;
+  text-align: center;
+  padding: 0.5em;
+ 
 }
+
+thead tr {
+  background-color: rgb(255, 212, 201); 
+  text-align: left; 
+}
+
 th, td {
-  border-bottom: 1px solid #999;
-  width: 25%;
+  padding: 12px 15px; 
 }
-caption {
-  font-weight: bold;
-  font-style: italic;
+
+tbody tr {
+  border-bottom: 1px solid #dddddd; 
+  background-color: #ccdfb6;
+  text-align: left;
+  
+} 
+
+tbody tr:nth-of-type(even) {
+  background-color: #fff4e9; 
+} 
+
+
+tfoot{
+  background-color: rgb(255, 212, 201); 
+  text-align: left; 
+}
+
+.saldo{
+  width: 80%;
+  height: 3%;
+  border-collapse: collapse;
+  
+  margin: auto;
+  margin-top: 5%;
+  font-size: 1em;
+  font-family: sans-serif;
+  min-width: 450px;
+
+}
+
+.saldo_button {
+  margin-top: -2.5%;
+  width: 12%;
+  height: 22px;
+  margin-left: 60%;
+  background: #ccdfb6;
+  color: black;
+}
+
+.saldo_form {
+  background: #fff;
+  padding: 50px 20px;
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  width: 80%;
+  margin: 70px auto;
 }
 
 

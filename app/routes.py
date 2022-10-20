@@ -296,7 +296,63 @@ def pagar(total):
 
 @app.route('/historialcompras', methods=['GET', 'POST'])
 def historialcompras():
-    return render_template('historialcompras.html', title = "Historial")
+
+    if 'usuario' not in session:
+        print("NO")
+        error="Por favor, primero inicie sesión"
+        return render_template('acceso.html', error=error, title = "Acceso")
+        
+    
+    nombre = session['usuario']
+    print(nombre)
+    usuario=session['usuario']
+    app_folder = os.getcwd()
+    path_user=os.path.join(app_folder, "si1users", usuario)
+
+    catalogue_data = open(os.path.join(path_user,'compras.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    
+    app_folder = os.getcwd()
+    path_user=os.path.join(app_folder, "si1users", usuario)
+    path_datos=os.path.join(path_user, "datos.dat")
+
+    dat = open(path_datos, 'r' ,encoding='utf-8')
+    content = dat.readlines() 
+    saldo=content[4]
+    saldo=saldo[0:(len(saldo)-1)]
+    dat.close()
+
+    return render_template('historialcompras.html', title = "Historial", movies=catalogue['compras'], saldo=saldo)
+
+@app.route('/aumento_saldo', methods=['POST'])
+def aumento_saldo():
+
+    aumento_saldo = request.form['aumento_saldo']
+
+    usuario=session['usuario']
+    app_folder = os.getcwd()
+    path_user=os.path.join(app_folder, "si1users", usuario)
+    path_datos=os.path.join(path_user, "datos.dat")
+
+    dat = open(path_datos, 'r' ,encoding='utf-8')
+    content = dat.readlines() 
+    saldo=content[4]
+    saldo=saldo[0:(len(saldo)-1)]
+    dat.close()
+
+    saldo_final=int(saldo)+int(aumento_saldo)
+
+    dat = open(path_datos, 'r+' ,encoding='utf-8')
+    content = dat.readlines() 
+    saldo=content[4]
+    content[4]=saldo_final
+    dat.close()
+
+    print(saldo_final)
+
+    return redirect(url_for('historialcompras'))
+
+
 
 @app.route('/usu_conectados', methods=['GET', 'POST'])
 def usu_conectados():
