@@ -46,8 +46,7 @@ def valorar(id,val):
             k["numero_valoraciones"]+=1
 
             # actualizar catalogue
-            with open(os.path.join(app.root_path,'catalogue/inventario.json'), "w") as jf: 
-                json.dump(catalogue, jf)
+            json.dump(catalogue, open(os.path.join(app.root_path,'catalogue/inventario.json'), "w"))
 
     print(id, val)
     return redirect(url_for('pelicula', id=id))
