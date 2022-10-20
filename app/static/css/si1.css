@@ -336,10 +336,11 @@ div.polaroid {
 .unidades{
   float: left;
   font-family: 'roboto';
+  color:#b1472d;
 }
 .header_polaroid{
   position: relative;
-  margin-left: 50px;
+  margin-left: 60px;
 }
 
 /************************** FORM DEL INICIO DE SESION *****************************************/
