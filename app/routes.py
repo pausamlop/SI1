@@ -342,17 +342,13 @@ def aumento_saldo():
     content = dat.readlines() 
     saldo=content[4]
     saldo=saldo[0:(len(saldo)-1)]
+    content[4]=str(float(saldo)+float(aumento_saldo))
+    datos_string= content[0]+content[1]+content[2]+content[3]+content[4]
     dat.close()
 
-    saldo_final=int(saldo)+int(aumento_saldo)
+    open(path_datos, 'w' ,encoding='utf-8').write(datos_string)
+    
 
-    dat = open(path_datos, 'r+' ,encoding='utf-8')
-    content = dat.readlines() 
-    saldo=content[4]
-    content[4]=saldo_final
-    dat.close()
-
-    print(saldo_final)
 
     return redirect(url_for('historialcompras'))
 
