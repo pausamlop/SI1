@@ -4,7 +4,7 @@
 from email import message
 import hashlib
 from app import app
-from flask import render_template, request, url_for, redirect, session, flash, Flask
+from flask import render_template, request, url_for, redirect, session, flash, Flask, make_response
 import json
 import os
 import sys
@@ -94,7 +94,11 @@ def index():
 
 @app.route('/showacceso', methods=['GET', 'POST'])
 def showacceso():
-    return render_template('acceso.html', title = "Acceso")
+    # si hay cookie
+    cookie = request.cookies.get("usuario")
+    if cookie == None:
+        return render_template('acceso.html', title = "Acceso", cookie="")
+    return render_template('acceso.html', title = "Acceso", user=cookie)
 
 @app.route('/acceso', methods=['GET', 'POST'])
 def acceso():
@@ -125,13 +129,22 @@ def acceso():
     #Comparamos las claves
     if(clave_dat != clave):
         error="La clave no es corecta"
-        return render_template('acceso.html', error=error, title = "Acceso")
+            # si hay cookie
+        cookie = request.cookies.get("usuario")
+        if cookie == None:
+            return render_template('acceso.html', title = "Acceso", cookie="", error=error)
+        return render_template('acceso.html', title = "Acceso", user=cookie,error=error)
     
     session['usuario']=usuario
     session['carrito']=list()
     session.modified=True
 
-    return redirect(url_for('principal'))
+    # guardar cookies
+    cookie=make_response(redirect(url_for('principal')))
+    cookie.set_cookie("usuario",usuario)
+
+    return cookie
+ 
 
 
 
@@ -160,7 +173,11 @@ def registro():
     if(os.path.isdir(path_user)):
         # flash("El usuario ya existe")
         error="El usuario ya existe"
-        return render_template('acceso.html', error=error, title = "Acceso")
+            # si hay cookie
+        cookie = request.cookies.get("usuario")
+        if cookie == None:
+            return render_template('acceso.html', title = "Acceso", cookie="", error=error)
+        return render_template('acceso.html', title = "Acceso", user=cookie, error=error)
     
     #Si no existe creamos la carpeta del usuario con los datos
     os.mkdir(path_user)
@@ -183,7 +200,12 @@ def registro():
     session['carrito']=list()
     session.modified = True
 
-    return redirect(url_for('principal'))
+    # guardar cookies
+    cookie=make_response(redirect(url_for('principal')))
+    cookie.set_cookie("usuario",usuario)
+
+    return cookie
+
 
 
 # PAGINA DEL CARRITO
@@ -300,7 +322,11 @@ def historialcompras():
     if 'usuario' not in session:
         print("NO")
         error="Por favor, primero inicie sesión"
-        return render_template('acceso.html', error=error, title = "Acceso")
+            # si hay cookie
+        cookie = request.cookies.get("usuario")
+        if cookie == None:
+            return render_template('acceso.html', title = "Acceso", cookie="", error=error)
+        return render_template('acceso.html', title = "Acceso", user=cookie, error=error)
         
     
     nombre = session['usuario']

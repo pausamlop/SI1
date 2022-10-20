@@ -12,8 +12,13 @@ acceso
         <div class="form">
             <h1>Inicio sesión</h1>
             <div class="grupo">
+                {% if user %}
+                <input type="text" name="username" value={{user}} id="username" class="input1" required><span class="barra"></span>
+                <label for="">Nombre</label>
+                {% else %}
                 <input type="text" name="username" id="username" class="input1" required><span class="barra"></span>
                 <label for="">Nombre</label>
+                {% endif %}
             </div>
             <div class="grupo">
                 <input type="password" name="pass" id="pass" class="input1" required><span class="barra"></span>
