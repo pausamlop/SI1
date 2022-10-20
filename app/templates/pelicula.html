@@ -46,7 +46,7 @@ pelicula
 
 
     <!-- <button>Añadir al carrito</button> -->
-    <a href="{{ url_for('anadircarrito', id=item.id) }}" class="peli_anadir"><input type="button"
+    <a href="{{ url_for('anadircarrito', id=item.id, next=0) }}" class="peli_anadir"><input type="button"
         value="Añadir al carrito" class="peli_anadir"></a>
 
     <!-- estrellas -->

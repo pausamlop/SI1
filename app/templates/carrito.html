@@ -6,26 +6,41 @@ carrito
 
 {% block content %}
 
-<form action="{{ url_for('registro') }}" method="POST">
-  <h1 class="carrito_txt"> FINALIZAR COMPRA </h1>
+{% if error %}
+<script>
+  showerror("{{error}}");
+</script>
+{% endif %}
+
+<div class="princip">
+  <h1 class="carrito_txt1"> FINALIZAR COMPRA </h1>
+  <h2 class="carrito_txt2"> Importe total: {{total}} € </h2>
   <!-- <button>Añadir al carrito</button> -->
-  <a href="{{ url_for('principal') }}" class="fin_compra" id="fin_compra_detalles"><input type="button" value="Pagar" class="fin_compra"></a>
+  <a href="{{ url_for('pagar',total=total) }}" class="fin_compra" id="fin_compra_detalles"><input type="button"
+      value="Pagar" class="fin_compra"></a>
 
   <!-- imprimir los posters con su fondo y titulo -->
+  {% for key, value in carrito_dict.items() %}
   {% for item in movies %}
+  {% if key == item.id %}
   <div class="polaroid">
-
-      <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img">
-      <h1 class="polaroid_txt">{{item.titulo}} </h1>
-      <a href="{{ url_for('eliminarcarrito', id=item.id) }}" class="eliminar_boton"><input type="button" value="eliminar" class="eliminar_txt"></a>
+    <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img">
+    <h1 class="polaroid_txt">{{item.titulo}} </h1>
+    <div class="header_polaroid">
+      <p class="unidades">unidades: {{value}} </p>
+      <a href="{{ url_for('anadircarrito', id=item.id, next=1) }}" id="cantidad_boton"><input type="button" value="+"
+          id="cantidad_boton"></a>
+      <a href="{{ url_for('eliminarcarrito', id=item.id) }}" id="cantidad_boton"><input type="button" value="-"
+          id="cantidad_boton"></a>
+    </div>
   </div>
-  
+  {% endif %}
   {% endfor %}
+  {% endfor %}
+ 
 
-      
 
-
-</form>
+</div>
 
 
 {% endblock %}

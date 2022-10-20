@@ -280,13 +280,23 @@ div.polaroid {
   font: red;
 }
 
-.carrito_txt{
+.carrito_txt1{
   margin-top: 3%;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
   font-size: 250%;
+  font-family: "Roboto";
+}
+
+.carrito_txt2{
+  margin-top: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 200%;
   font-family: "Roboto";
 }
 
@@ -311,10 +321,25 @@ div.polaroid {
   border-radius: 20px;
 }
 
-.eliminar_boton{
+#cantidad_boton{
   font-family: 'roboto';
   text-decoration:none;
-  color:#D8000C;
+  background: #ff7e5f;
+  color: #fff;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #feb47b, #ff7e5f);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border: none;
+}
+.unidades{
+  float: left;
+  font-family: 'roboto';
+}
+.header_polaroid{
+  position: relative;
+  margin-left: 50px;
 }
 
 /************************** FORM DEL INICIO DE SESION *****************************************/
