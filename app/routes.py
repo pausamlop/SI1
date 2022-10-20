@@ -18,15 +18,12 @@ from datetime import date
 @app.route('/')
 @app.route('/principal', methods=['GET', 'POST'])
 def principal():
-    #print (url_for('static', filename='css/si1.css'), file=sys.stderr)
     catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     return render_template('principal.html', title = "Home", movies=catalogue['peliculas'])
 
 @app.route('/frame')
 def frame():
-    #print (url_for('static', filename='css/si1.css'), file=sys.stderr)
-    # print (url_for(filename='/templates/frame.html'), file=sys.stderr)
     return render_template('frame.html', title = "Home")
 
 
@@ -111,7 +108,6 @@ def acceso():
 
     #Comprobamos si el usuario existe
     if(os.path.isdir(path_user) == False):
-        # flash("El usuario ya existe")
         error="El usuario no existe"
         return render_template('registro.html', error=error, title = "Registro")
 
@@ -167,6 +163,12 @@ def registro():
     
     # Obtenemos el path a la carpeta usuario
     app_folder = os.getcwd()
+    path_folder_users=os.path.join(app_folder, "si1users")
+    
+
+    if(os.path.isdir(path_folder_users) == False):
+        os.mkdir(path_folder_users)
+
     path_user=os.path.join(app_folder, "si1users", usuario)
 
     #Comprobamos si el usuario ya existe
@@ -267,12 +269,12 @@ def eliminarcarrito(id):
     return redirect('/carrito')
 
 
-# PAGAR PONER UN MONTOON DE WARNINGS
+# PAGAR 
 @app.route('/pagar/<float:total>') 
 def pagar(total):
     # si el usuario no esta registrado, ir al registro
     if not session.get('usuario'):
-        return render_template('registro.html', error="Registrese antes de finalizar su compra", title = "Registro") # no se si aqui se deberia mantener el carrito? # mensaje warning
+        return render_template('registro.html', error="Registrese antes de finalizar su compra", title = "Registro") 
     # leer el archivo
     datos = open(os.path.join(app.root_path,"../si1users/"+session['usuario']+"/datos.dat"), encoding="utf-8").readlines()
     # comprobar saldo
@@ -320,7 +322,6 @@ def pagar(total):
 def historialcompras():
 
     if 'usuario' not in session:
-        print("NO")
         error="Por favor, primero inicie sesión"
             # si hay cookie
         cookie = request.cookies.get("usuario")
@@ -330,7 +331,6 @@ def historialcompras():
         
     
     nombre = session['usuario']
-    print(nombre)
     usuario=session['usuario']
     app_folder = os.getcwd()
     path_user=os.path.join(app_folder, "si1users", usuario)

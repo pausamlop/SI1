@@ -7,11 +7,11 @@ carrito
 {% block content %}
 
 
+
 <form action="{{ url_for('aumento_saldo') }}" method="POST" id="saldo_form">
   
   <div class="saldo_form">
 
-    <!-- <p class="caption">Historial de las compras realizadas</p> -->
 
     <table class="content-table" id="content-table">
       <caption>Historial de las compras realizadas:</caption>
@@ -19,6 +19,7 @@ carrito
       <thead>
         <tr>
           <th scope="col">Titulo</th>
+          <th scope="col">Fecha de compra</th>
           <th scope="col">Categoria</th>
           <th scope="col">Valoracion</th>
           <th scope="col">Precio</th>
@@ -29,27 +30,22 @@ carrito
       <tbody>
 
         {% for item in movies %}
+    
+
         <tr>
-          <th scope="row">{{item.titulo}}</th>
-          <td>{{item.categoria}}</td>
-          <td>{{item.valoracion_media}}</td>
-          <td>{{item.precio}}</td>
+          <th scope="row"><a href="#" class="row">{{item.titulo}}</a></th>
+          
+          <td><div class="respuesta" style="display:none">{{item.fecha}}</div></td>
+          <td><div class="respuesta" style="display:none">{{item.categoria}}</div></td>
+          <td><div class="respuesta" style="display:none">{{item.valoracion_media}}</div></td>
+          <td><div class="respuesta" style="display:none">{{item.precio}}</div></td>
+          
         </tr>
+
+        
         {% endfor %}
-
-
+        
       </tbody>
-
-
-      <!-- <tfoot>
-        <tr>
-          <th scope="row" colspan="3">Precio total:</th>
-          <td colspan="3"><span class="total">
-            <script type="text/javascript" src="../static/javascript/suma.js"></script>
-          </td>
-        </tr>
-      </tfoot> -->
-
 
     </table>
 

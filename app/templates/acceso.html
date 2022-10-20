@@ -6,7 +6,11 @@ acceso
 
 
 {% block content %}
-
+    {% if error %}
+        <script>
+            showerror("{{error}}");
+        </script>
+    {% endif %}
 
     <form action="{{ url_for('acceso') }}" method="POST" id="form">
         <div class="form">
