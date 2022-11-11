@@ -1,0 +1,67 @@
+{% extends "frame.html" %}
+
+{% block title %}
+carrito
+{% endblock%}
+
+{% block content %}
+
+
+
+<form action="{{ url_for('aumento_saldo') }}" method="POST" id="saldo_form">
+  
+  <div class="saldo_form">
+
+
+    <table class="content-table" id="content-table">
+      <caption>Historial de las compras realizadas:</caption>
+
+      <thead>
+        <tr>
+          <th scope="col">Titulo</th>
+          <th scope="col">Fecha de compra</th>
+          <th scope="col">Categoria</th>
+          <th scope="col">Valoracion</th>
+          <th scope="col">Precio</th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+
+        {% for item in movies %}
+    
+
+        <tr>
+          <th scope="row"><a href="#" class="row">{{item.titulo}}</a></th>
+          
+          <td><div class="respuesta" style="display:none">{{item.fecha}}</div></td>
+          <td><div class="respuesta" style="display:none">{{item.categoria}}</div></td>
+          <td><div class="respuesta" style="display:none">{{item.valoracion_media}}</div></td>
+          <td><div class="respuesta" style="display:none">{{item.precio}}</div></td>
+          
+        </tr>
+
+        
+        {% endfor %}
+        
+      </tbody>
+
+    </table>
+
+    
+    <div class="saldo">
+        <p>Dispone de un saldo de: {{saldo}}€</p>
+        <br>
+        <p>Inserte una cantidada para aumentar su saldo: 
+            <input type="number" value="" name="aumento_saldo"><span class="barra"></span>
+            <button class="saldo_button" type="submit">Submit</button>
+        </p>
+        
+    </div>
+
+
+  </div>
+</form>
+
+{% endblock %}

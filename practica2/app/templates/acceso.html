@@ -1,0 +1,37 @@
+{% extends "frame.html" %}
+
+{% block title %}
+acceso
+{% endblock%}
+
+
+{% block content %}
+    {% if error %}
+        <script>
+            showerror("{{error}}");
+        </script>
+    {% endif %}
+
+    <form action="{{ url_for('acceso') }}" method="POST" id="form">
+        <div class="form">
+            <h1>Inicio sesión</h1>
+            <div class="grupo">
+                {% if user %}
+                <input type="text" name="username" value={{user}} id="username" class="input1" required><span class="barra"></span>
+                <label for="">Nombre</label>
+                {% else %}
+                <input type="text" name="username" id="username" class="input1" required><span class="barra"></span>
+                <label for="">Nombre</label>
+                {% endif %}
+            </div>
+            <div class="grupo">
+                <input type="password" name="pass" id="pass" class="input1" required><span class="barra"></span>
+                <label for="">Contraseña</label>
+            </div>
+
+        <button type="submit">Log in</button>
+    </div>
+</form>
+{% endblock %}
+
+

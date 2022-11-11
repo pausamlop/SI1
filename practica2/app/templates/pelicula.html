@@ -1,0 +1,85 @@
+{% extends "frame.html" %}
+
+{% block title %}
+pelicula
+{% endblock%}
+
+{% block content %}
+
+{% for item in movies %}
+{% if item.id == movie_id %}
+<div class="princip">
+  <!-- CLASE FONDO  -->
+  <img src="{{url_for('static', filename=item.poster)}}" class="peli_poster">
+  <div class="peli_form">
+    <h1>{{item.titulo}}</h1>
+
+
+    <ul>
+      <br>
+      <li>
+        <p class="peli_info">Sinopsis:<br> {{item.sinopsis}} </p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Precio: {{item.precio}} </p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Director: {{item.director}}</p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Categoria: {{item.categoria}}</p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Año: {{item.anno}}</p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Actores: {% for item in item.actores %} {{item.nombre}} {% endfor %}</p>
+        <br>
+      </li>
+    </ul>
+
+
+
+    <!-- <button>Añadir al carrito</button> -->
+    <a href="{{ url_for('anadircarrito', id=item.id, next=0) }}" class="peli_anadir"><input type="button"
+        value="Añadir al carrito" class="peli_anadir"></a>
+
+    <!-- estrellas -->
+
+    <div class="valoracion">
+
+      <p> {{item.numero_valoraciones}} usuarios han valorado esta pelicula.</p>
+      <p> La valoracion media es de {{item.valoracion_media}} estrellas.</p>
+      <p> Danos tu opinion: </p>
+      <br>
+
+      <a href="{{ url_for('valorar', id=item.id, val=1) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=2) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=3) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=4) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=5) }}"><input type="button" value="☆"></a>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+</div>
+{% endif%}
+{% endfor %}
+
+
+{% endblock %}

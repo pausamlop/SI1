@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/si1.css">
+
+    <!-- Añadimos los scripts que vamos a usar -->
+    <script src="../static/javascript/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/javascript/error.js"></script> 
+    <script type="text/javascript" src="../static/javascript/conectados.js"></script>
+    <script type="text/javascript" src="../static/javascript/toggle.js"></script>
+    
+
+</head>
+
+
+<body> 
+
+    <header> 
+        
+        {% if session['usuario'] %}
+          <p class="saludo">Hola, {{session['usuario']}}!</p>
+        {% endif %}
+
+        <h1> LA MARAVILLOSA TIENDA DE PELICULAS </h1>
+
+        <a href="{{ url_for('carrito') }}"><img id="img_carrito" alt="Error" src="../static/img/carrito.png"></a> 
+
+        {% if not session['usuario'] %}
+            <a  href="{{ url_for('showacceso') }}"><img id="img_usuario" alt="Error" src="../static/img/usu.png"></a>
+        {% else %}
+            <a href="{{ url_for('historialcompras') }}"><img id="img_usuario" alt="Error" src="../static/img/usu.png"></a>
+        {% endif %}
+
+    </header>
+
+    <div class="menu"> 
+        <nav>
+            <ul>
+              <br>
+              <li><a href="{{ url_for('principal') }}">Página principal</a></li>
+              <br>
+              
+              {% if not session['usuario'] %}
+                <li><a href="{{ url_for('historialcompras') }}">Historial de compras</a></li>
+                <br>
+                <li><a href="{{ url_for('showacceso') }}">Inicio sesión</a></li>
+                <br>
+                <li><a href="{{ url_for('showregistro') }}">Regístrate</a></li>
+                <br>
+              {% else %}
+                <li><a href="{{ url_for('historialcompras') }}">Historial de compras</a></li>
+                <br>
+                <li><a href="{{ url_for('logout') }}">Salir</a></li>
+              {% endif %}
+              <br>
+              <p class="connect">Usuarios conectados: <span id="conectados"> 37</span></p>
+            </ul>
+            
+        </nav>
+
+        
+        
+      
+    </div>
+
+
+    {% block content%} {% endblock %}
+
+
+    <footer> 
+        <p> Copyright © Maravillosas </p>
+    </div>
+
+    
+
+
+
+</body>
+</html>
