@@ -57,7 +57,7 @@ RETURN QUERY (
         SalesPerYearMax
     WHERE
         sales_rank = 1 AND
-        yeardate BETWEEN year1 AND year2
+        yeardate BETWEEN $1 AND $2
     ORDER BY
         moviesales DESC
 );
@@ -67,3 +67,4 @@ DROP VIEW IF EXISTS SalesPerYear CASCADE;
 END;
 
 $$ LANGUAGE plpgsql;
+

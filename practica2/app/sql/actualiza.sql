@@ -6,6 +6,20 @@
 ----------------------  COMPLETAR ASPECTOS DE LA TABLA  ----------------------
 
 
+------------------------- añadir cambios en cascada --------------------------
+
+
+
+-- si se borra una peli ->borrar tabla moviegenre, movielanguage,moviecountries,directormovie,actormovie, ratings, products, ...
+-- ON DELETE CASCADE
+
+
+-- ON UPDATE CASCADE??
+
+
+------------------------------- constraints ---------------------------------
+
+
 
 ---------------------------- añadir foreign keys -----------------------------
 
@@ -102,6 +116,23 @@ ALTER TABLE
     public.customers
 ALTER public.customers.password varbinary(96)
 
+
+
+
+
+-- Funcion para inicializar el campo ‘balance’ de la tabla ‘customers’ a un número aleatorio entre 0 y N,
+CREATE
+OR REPLACE FUNCTION setCustomersBalance(IN initialBalance bigint) 
+
+BEGIN
+
+UPDATE
+    public.customers
+SET
+    balance = N
+END;
+
+LANGUAGE plpgsql;
 
 
 
