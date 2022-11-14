@@ -3,7 +3,6 @@
 
 
 
-
 -- actualizar la tabla imdb_movies cuando se añada, actualice  elimine una valoracion
 
 -- funcion que ejecuta el trigger
@@ -15,24 +14,44 @@ BEGIN
 
 -- se añade una valoracion
 IF (TG_OP = 'INSERT') THEN
+
+    -- rating count
     UPDATE
         public.imdb_movies
     SET
-        -- rating mean
-        -- ratingmean = round((ratingmean*ratingcount + NEW.rating)/(UNO+ratingcount), 2),
-        -- rating count
         ratingcount = ratingcount + 1;
+    
+    -- rating mean
+    UPDATE
+        public.imdb_movies
+    SET
+        ratingmean = round((ratingmean*(ratingcount-1) + NEW.rating)/ratingcount, 2);
 
 
 -- se elimina una valoracion
 ELSIF (TG_OP = 'DELETE') THEN
+
+    -- rating count
     UPDATE
         public.imdb_movies
     SET
-        -- rating mean
-        -- ratingmean = round((ratingmean*ratingcount - OLD.rating)/(ratingcount -UNO), 2),
-        -- rating count
         ratingcount = ratingcount - 1;
+
+    -- rating mean (dos updates para evitar una division entre 0)
+    UPDATE
+        public.imdb_movies
+    SET
+        ratingmean = round((ratingmean*(ratingcount+1) - OLD.rating)/ratingcount, 2)
+    WHERE 
+        not ratingcount = 0;
+
+    UPDATE
+        public.imdb_movies
+    SET
+        ratingmean = 0
+    WHERE 
+        ratingcount = 0;
+
 
 
 -- se actualiza una valoracion
