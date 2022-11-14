@@ -138,8 +138,6 @@ LANGUAGE plpgsql;
 
 
 
-
-
 -- INSERT INTO public.imdb_actormovies_v1
 -- SELECT * FROM public.imdb_actormovies
 
