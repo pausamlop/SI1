@@ -114,25 +114,37 @@ SET
 -- Aumentar el tamaño de ‘password’ en la tabla ‘customers’ (96 caracteres hexadecimales)
 ALTER TABLE
     public.customers
-ALTER public.customers.password varbinary(96)
+ADD
+    COLUMN passhex varchar(96);
+
+UPDATE
+    public.customers
+SET
+    passhex = password;
+
+ALTER TABLE
+    public.customers DROP COLUMN password;
+
+ALTER TABLE
+    public.customers RENAME COLUMN passhex to password;
 
 
 
 
 
 -- Funcion para inicializar el campo ‘balance’ de la tabla ‘customers’ a un número aleatorio entre 0 y N,
-CREATE
-OR REPLACE FUNCTION setCustomersBalance(IN initialBalance bigint) 
-
-BEGIN
-
+CREATE OR REPLACE 
+FUNCTION setCustomersBalance(IN initialBalance bigint) 
+RETURNS void as 
+$$
 UPDATE
     public.customers
 SET
-    balance = N
-END;
+    balance = floor(initialBalance * random()) 
+$$ LANGUAGE sql;
 
-LANGUAGE plpgsql;
+-- llamada a la funcion para N = 100
+SELECT setCustomersBalance(100);
 
 
 

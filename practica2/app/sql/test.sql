@@ -1,11 +1,15 @@
-CREATE
-OR REPLACE FUNCTION setCustomersBalance(IN initialBalance bigint) RETURN void $$
-
-BEGIN
-
+CREATE OR REPLACE 
+FUNCTION setCustomersBalance(IN initialBalance bigint) 
+RETURNS void as 
+$$
 UPDATE
     public.customers
 SET
-    balance = FLOOR(RAND()*initialBalance);
-END;
-$$ LANGUAGE plpgsql;
+    balance = floor(initialBalance * random()) 
+$$ LANGUAGE sql;
+
+
+SELECT setCustomersBalance(100);
+
+
+
