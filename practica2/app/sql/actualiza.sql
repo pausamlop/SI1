@@ -8,13 +8,52 @@
 
 ------------------------- añadir cambios en cascada --------------------------
 
+-- si se borra una pelicula -> borrar entrada en movie countries
+ALTER TABLE
+    public.imdb_moviecountries 
+DROP 
+    CONSTRAINT imdb_moviecountries_movieid_fkey,
+ADD
+    CONSTRAINT imdb_moviecountries_movieid_fkey FOREIGN KEY (movieid) 
+    REFERENCES public.imdb_movies (movieid) ON DELETE CASCADE;
+
+-- si se borra una pelicula -> borrar entrada en movie languages
+ALTER TABLE
+    public.imdb_movielanguages
+DROP 
+    CONSTRAINT imdb_movielanguages_movieid_fkey,
+ADD
+    CONSTRAINT imdb_movielanguages_movieid_fkey FOREIGN KEY (movieid) 
+    REFERENCES public.imdb_movies (movieid) ON DELETE CASCADE;
+
+-- si se borra una pelicula -> borrar entrada en movie genres
+ALTER TABLE
+    public.imdb_moviegenres
+DROP 
+    CONSTRAINT imdb_moviegenres_movieid_fkey,
+ADD
+    CONSTRAINT imdb_moviegenres_movieid_fkey FOREIGN KEY (movieid) 
+    REFERENCES public.imdb_movies (movieid) ON DELETE CASCADE;
 
 
--- si se borra una peli ->borrar tabla moviegenre, movielanguage,moviecountries,directormovie,actormovie, ratings, products, ...
--- ON DELETE CASCADE
+-- si se borra una pelicula -> borrar entrada en director movies
+ALTER TABLE
+    public.imdb_directormovies
+DROP 
+    CONSTRAINT imdb_directormovies_directorid_fkey,
+ADD
+    CONSTRAINT imdb_directormovies_movieid_fkey1 FOREIGN KEY (movieid) 
+    REFERENCES public.imdb_movies (movieid) ON DELETE CASCADE;
 
+-- si se borra una pelicula -> borrar products
+ALTER TABLE
+    public.products
+DROP 
+    CONSTRAINT products_movieid_fkey,
+ADD
+    CONSTRAINT products_movieid_fkey FOREIGN KEY (movieid) 
+    REFERENCES public.imdb_movies (movieid) ON DELETE CASCADE;
 
--- ON UPDATE CASCADE??
 
 
 ------------------------------- constraints ---------------------------------
@@ -28,42 +67,48 @@
 ALTER TABLE
     public.imdb_actormovies
 ADD
-    CONSTRAINT fk_actorid FOREIGN KEY (actorid) REFERENCES public.imdb_actors (actorid);
+    CONSTRAINT fk_actorid FOREIGN KEY (actorid) 
+    REFERENCES public.imdb_actors (actorid);
 
 
 -- imdb_actormovies:    movieid --> imdb_movies
 ALTER TABLE
     public.imdb_actormovies
 ADD
-    CONSTRAINT fk_movieid FOREIGN KEY (movieid) REFERENCES public.imdb_movies (movieid);
+    CONSTRAINT fk_movieid FOREIGN KEY (movieid) 
+    REFERENCES public.imdb_movies (movieid) ON DELETE CASCADE;
 
 
 -- orderdetail:     orderid --> orders
 ALTER TABLE
     public.orderdetail
 ADD
-    CONSTRAINT fk_orderid FOREIGN KEY (orderid) REFERENCES public.orders (orderid);
+    CONSTRAINT fk_orderid FOREIGN KEY (orderid) 
+    REFERENCES public.orders (orderid) ON DELETE CASCADE;
 
 
 -- orderdetail:     prod_id --> product
 ALTER TABLE
     public.orderdetail
 ADD
-    CONSTRAINT fk_prodid2 FOREIGN KEY (prod_id) REFERENCES public.products (prod_id);
+    CONSTRAINT fk_prodid2 FOREIGN KEY (prod_id) 
+    REFERENCES public.products (prod_id);
 
 
 -- inventory:      prod_id -> products
 ALTER TABLE
     public.inventory
 ADD
-    CONSTRAINT fk_prodid1 FOREIGN KEY (prod_id) REFERENCES public.products (prod_id);
+    CONSTRAINT fk_prodid1 FOREIGN KEY (prod_id) 
+    REFERENCES public.products (prod_id);
 
 
 -- orders:      customerid -> customers
 ALTER TABLE
     public.orders
 ADD
-    CONSTRAINT fk_customerid FOREIGN KEY (customerid) REFERENCES public.customers (customerid);
+    CONSTRAINT fk_customerid FOREIGN KEY (customerid) 
+    REFERENCES public.customers (customerid);
 
 
 ------------------------------------------------------------------------------
@@ -88,15 +133,15 @@ SET
 
 -- tabla ratings para guardar la valoracion de un usuario a una pelicula (y que no la valore 2 veces)
 CREATE TABLE public.ratings (
-    movieid integer REFERENCES public.imdb_movies (movieid),
+    movieid integer REFERENCES public.imdb_movies (movieid) ON DELETE CASCADE,
     customerid integer REFERENCES public.customers (customerid),
     rating NUMERIC,
     PRIMARY KEY (movieid, customerid)
 );
 
 
--- Añadir dos campos a la tabla ‘imdb_movies’, para contener la valoración media ‘ratingmean’ 
--- y el número de valoraciones ‘ratingcount’, de cada película.
+-- Añadir dos campos a la tabla ‘imdb_movies’, para contener la valoración media ‘ratingmean’ 
+-- y el número de valoraciones ‘ratingcount’, de cada película.
 ALTER TABLE
     public.imdb_movies
 ADD
@@ -111,7 +156,7 @@ SET
     ratingcount = 0;
 
 
--- Aumentar el tamaño de ‘password’ en la tabla ‘customers’ (96 caracteres hexadecimales)
+-- Aumentar el tamaño de ‘password’ en la tabla ‘customers’ (96 caracteres hexadecimales)
 ALTER TABLE
     public.customers
 ADD
@@ -132,7 +177,7 @@ ALTER TABLE
 
 
 
--- Funcion para inicializar el campo ‘balance’ de la tabla ‘customers’ a un número aleatorio entre 0 y N,
+-- Funcion para inicializar el campo ‘balance’ de la tabla ‘customers’ a un número aleatorio entre 0 y N,
 CREATE OR REPLACE 
 FUNCTION setCustomersBalance(IN initialBalance bigint) 
 RETURNS void as 
@@ -147,13 +192,6 @@ $$ LANGUAGE sql;
 SELECT setCustomersBalance(100);
 
 
-
-
-
--- INSERT INTO public.imdb_actormovies_v1
--- SELECT * FROM public.imdb_actormovies
-
--- SELECT * FROM public.imdb_actormovies_v1
 
 
 
@@ -307,4 +345,3 @@ ADD CONSTRAINT imdb_movielanguages_pkey PRIMARY KEY (movieid, languageid);
 --Creamos una nueva foregin key para relacionar imdb_moviecountries con moviecountries
 ALTER TABLE public.imdb_movielanguages
 ADD CONSTRAINT fk_languageid FOREIGN KEY (languageid) REFERENCES public.imdb_languages (languageid);
-
