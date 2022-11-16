@@ -12,3 +12,4 @@ FROM
     public.products 
 WHERE 
 	public.orderdetail.prod_id = public.products.prod_id;
+

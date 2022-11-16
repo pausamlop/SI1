@@ -32,15 +32,27 @@ principal
 
     </div>
 
+    <!-- topSales -->
+    <hr> <div class="topSales">
+        <h1> Películas más vendidas </h1>
+        <br>
+        {% for item in topSales %}
+        
+        <p> {{item.year}}: {{item.film}} - {{item.sales}} ventas</p>
+        {% endfor %}
+
+    </div> <hr>
+
     <!-- imprimir los posters con su fondo y titulo -->
     {% for item in movies %}
-    <a href="{{ url_for('pelicula', id=item.id) }}">
+    <a href="{{ url_for('pelicula', id=item.titulo) }}">
         <div class="polaroid">
-            <img src="{{url_for('static', filename=item.poster)}}" class="polaroid_img">
+            <img src="{{url_for('static', filename=img/poster.jpg)}}" class="polaroid_img">
             <h1 class="polaroid_txt">{{item.titulo}} </h1>
         </div>
     </a>
     {% endfor %}
+
 
 
 </form>

@@ -4,6 +4,7 @@
 from email import message
 import hashlib
 from app import app
+from app import database
 from flask import render_template, request, url_for, redirect, session, flash, Flask, make_response
 import json
 import os
@@ -13,14 +14,26 @@ from pathlib import Path
 from datetime import date
 
 
-
-
 @app.route('/')
 @app.route('/principal', methods=['GET', 'POST'])
 def principal():
     catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
-    return render_template('principal.html', title = "Home", movies=catalogue['peliculas'])
+
+    # get top sales
+    topSales = database.db_topSales()
+
+    print(database.db_movieSelection())
+    # movietitle
+    # year
+
+    # genero
+    # idioma
+    # country
+    # actores
+    # director
+
+    return render_template('principal.html', title = "Home", movies=[], topSales = topSales)
 
 @app.route('/frame')
 def frame():
@@ -32,6 +45,10 @@ def frame():
 def valorar(id,val):
     catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
+
+    # si el usuario no esta registrado, mandar al registro
+    if not session.get('usuario'):
+        return redirect(url_for('showregistroERR', error="Registrese antes de valorar una pelicula."))
 
     # encontrar peli a valorar
     for k in catalogue['peliculas']:
@@ -49,6 +66,7 @@ def valorar(id,val):
             json.dump(catalogue, open(os.path.join(app.root_path,'catalogue/inventario.json'), "w"))
 
     print(id, val)
+
     return redirect(url_for('pelicula', id=id))
 
 
@@ -74,8 +92,11 @@ def busqueda():
         if (request.form['buscar'].lower() in k["titulo"].lower()) and (request.form['filtro'] in k["categoria"]):
             coincidencias.append(k)
 
+
+    # get top sales
+    topSales = database.db_topSales()
     # redirigir a la pagina principal mostrando solo las coincidencias
-    return render_template('principal.html', title = "Pelicula", movie_id=id, movies=coincidencias)
+    return render_template('principal.html', title = "Pelicula", movie_id=id, movies=coincidencias, topSales = topSales)
 
 
 
@@ -139,13 +160,15 @@ def acceso():
     cookie.set_cookie("usuario",usuario)
 
     return cookie
- 
-
 
 
 @app.route('/showregistro', methods=['GET', 'POST'])
 def showregistro():
     return render_template('registro.html', title = "Registro")
+
+@app.route('/showregistroERR/<string:error>', methods=['GET', 'POST'])
+def showregistroERR(error):
+    return render_template('registro.html', error=error, title = "Registro")
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -282,7 +305,9 @@ def pagar(total):
     if saldo < total:
         catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
         catalogue = json.loads(catalogue_data)
-        return render_template('principal.html', total=total, error="Saldo insuficiente",movies=catalogue['peliculas'],title = "Home")
+        # get top sales
+        topSales = database.db_topSales()
+        return render_template('principal.html', total=total, error="Saldo insuficiente",movies=catalogue['peliculas'],title = "Home", topSales = topSales)
     
     # actualizar saldo
     datos[4]=str(saldo-total)
@@ -313,7 +338,9 @@ def pagar(total):
     # vaciar el carrito
     session['carrito']=[]
     session.modified = True
-    return render_template('principal.html', total=total, error="Compra procesada correctamente",movies=catalogue['peliculas'],title = "Home")
+    # get top sales
+    topSales = database.db_topSales()
+    return render_template('principal.html', total=total, error="Compra procesada correctamente",movies=catalogue['peliculas'],title = "Home", topSales = topSales)
 
 
 

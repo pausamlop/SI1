@@ -10,18 +10,18 @@ pelicula
 {% if item.id == movie_id %}
 <div class="princip">
   <!-- CLASE FONDO  -->
-  <img src="{{url_for('static', filename=item.poster)}}" class="peli_poster">
+  <img src="{{url_for('static', filename=img/poster.jpg)}}" class="peli_poster">
   <div class="peli_form">
-    <h1>{{item.titulo}}</h1>
+    <h1>{{item.movietitle}}</h1>
 
 
     <ul>
       <br>
       <li>
-        <p class="peli_info">Sinopsis:<br> {{item.sinopsis}} </p>
+        <p class="peli_info">Año:<br> {{year}} </p>
       </li>
       <br>
-      <li>
+      <!-- <li>
         <p class="peli_info">Precio: {{item.precio}} </p>
       </li>
       <br>
@@ -40,7 +40,7 @@ pelicula
       <li>
         <p class="peli_info">Actores: {% for item in item.actores %} {{item.nombre}} {% endfor %}</p>
         <br>
-      </li>
+      </li> -->
     </ul>
 
 

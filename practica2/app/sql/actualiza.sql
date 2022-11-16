@@ -140,8 +140,8 @@ CREATE TABLE public.ratings (
 );
 
 
--- Añadir dos campos a la tabla ‘imdb_movies’, para contener la valoración media ‘ratingmean’ 
--- y el número de valoraciones ‘ratingcount’, de cada película.
+-- Añadir dos campos a la tabla ‘imdb_movies’, para contener la valoración media ‘ratingmean’ 
+-- y el número de valoraciones ‘ratingcount’, de cada película.
 ALTER TABLE
     public.imdb_movies
 ADD
@@ -156,7 +156,7 @@ SET
     ratingcount = 0;
 
 
--- Aumentar el tamaño de ‘password’ en la tabla ‘customers’ (96 caracteres hexadecimales)
+-- Aumentar el tamaño de ‘password’ en la tabla ‘customers’ (96 caracteres hexadecimales)
 ALTER TABLE
     public.customers
 ADD
@@ -177,7 +177,7 @@ ALTER TABLE
 
 
 
--- Funcion para inicializar el campo ‘balance’ de la tabla ‘customers’ a un número aleatorio entre 0 y N,
+-- Funcion para inicializar el campo ‘balance’ de la tabla ‘customers’ a un número aleatorio entre 0 y N,
 CREATE OR REPLACE 
 FUNCTION setCustomersBalance(IN initialBalance bigint) 
 RETURNS void as 
