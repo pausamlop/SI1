@@ -17,23 +17,9 @@ from datetime import date
 @app.route('/')
 @app.route('/principal', methods=['GET', 'POST'])
 def principal():
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
 
-    # get top sales
-    topSales = database.db_topSales()
-
-    print(database.db_movieSelection())
-    # movietitle
-    # year
-
-    # genero
-    # idioma
-    # country
-    # actores
-    # director
-
-    return render_template('principal.html', title = "Home", movies=[], topSales = topSales)
+    return render_template('principal.html', title = "Home", movies = database.db_movieSelection(), 
+                                topSales = database.db_topSales(), genres=database.db_getGenres())
 
 @app.route('/frame')
 def frame():
@@ -43,27 +29,13 @@ def frame():
 # VALORACION DE UNA PELICULA
 @app.route('/valorar/<int:id>/<int:val>')
 def valorar(id,val):
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
 
     # si el usuario no esta registrado, mandar al registro
     if not session.get('usuario'):
         return redirect(url_for('showregistroERR', error="Registrese antes de valorar una pelicula."))
 
-    # encontrar peli a valorar
-    for k in catalogue['peliculas']:
-        if k["id"] == id:
-            # encontrar antigua valoracion
-            print('valoracion media:' + str(k["valoracion_media"]))
-            # encontrar numero de usuarios que han votado
-            print('numero valoraciones'+ str(k["numero_valoraciones"]))
-            # calcular nueva media con la valoracion = (antigua*usuarios + nueva)/usuarios+1
-            k['valoracion_media']= (float(k['valoracion_media'])*k["numero_valoraciones"]+val)/(k["numero_valoraciones"]+1)
-            k['valoracion_media']="{0:.2f}".format(k['valoracion_media'])
-            k["numero_valoraciones"]+=1
-
-            # actualizar catalogue
-            json.dump(catalogue, open(os.path.join(app.root_path,'catalogue/inventario.json'), "w"))
+    # WARNING HACE FALTA METER EL CUSTOMERID
+    database.db_valorar(id, 3, val)
 
     print(id, val)
 
@@ -74,29 +46,26 @@ def valorar(id,val):
 # PAGINA DE DETALLE DE LAS PELICULAS
 @app.route('/pelicula/<int:id>')
 def pelicula(id):
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    return render_template('pelicula.html', title = "Pelicula", movie_id=id, movies=catalogue['peliculas'])
+
+    d1 = database.db_movieData(id)
+    d2 = database.db_getRatings(id)
+
+    return render_template('pelicula.html', title = "Pelicula", prod_id=id, movies=d1, ratings=d2)
+
+
 
 # BUSQUEDA DE PELICULAS
 @app.route('/busqueda', methods=['POST'])
 def busqueda():
-    # cargar catalogo de peliculas
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
 
-    # buscar en los catalogos y anadir las peliculas con coincidencias
-    coincidencias = list()
-    for k in catalogue['peliculas']:
-        # busqueda y filtro
-        if (request.form['buscar'].lower() in k["titulo"].lower()) and (request.form['filtro'] in k["categoria"]):
-            coincidencias.append(k)
-
+    # busqueda en la base de datos
+    coincidencias = database.db_searchFilterMovies(request.form['buscar'].lower(), request.form['filtro'])
 
     # get top sales
     topSales = database.db_topSales()
     # redirigir a la pagina principal mostrando solo las coincidencias
-    return render_template('principal.html', title = "Pelicula", movie_id=id, movies=coincidencias, topSales = topSales)
+    return render_template('principal.html', title = "Pelicula", movie_id=id, 
+            movies=coincidencias, topSales = topSales, genres=database.db_getGenres())
 
 
 
@@ -123,27 +92,34 @@ def acceso():
     usuario = request.form['username']
     pass1 = request.form['pass']
 
-    
+    app_folder = os.getcwd()
+    path_user=os.path.join(app_folder, "si1users", usuario)
+
     #Comprobamos si el usuario existe
-    if(database.db_user_exists(usuario) == False):
+    if(os.path.isdir(path_user) == False):
         error="El usuario no existe"
         return render_template('registro.html', error=error, title = "Registro")
 
- 
+    #Leemos la clave del dichero datos.dat del usuario
+    path_datos=os.path.join(path_user, "datos.dat")
+    dat = open(path_datos, 'r' ,encoding='utf-8')
+    content = dat.readlines() 
+    clave_dat=content[1]
+    clave_dat=clave_dat[0:(len(clave_dat)-1)]
+    dat.close()
+
+    salt="superseguridadactivada"
+    clave=hashlib.sha3_384((salt+pass1).encode('utf-8')).hexdigest()
+
     #Comparamos las claves
-    ret = database.db_user_login(usuario, pass1)
-    
-    if( ret[0]== False):
+    if(clave_dat != clave):
         error="La clave no es corecta"
-        # si hay cookie
+            # si hay cookie
         cookie = request.cookies.get("usuario")
         if cookie == None:
             return render_template('acceso.html', title = "Acceso", cookie="", error=error)
-        return render_template('acceso.html', title = "Acceso", user=cookie, error=error)
+        return render_template('acceso.html', title = "Acceso", user=cookie,error=error)
     
-    customerid = ret[1]
-
-    session['customerid']=customerid
     session['usuario']=usuario
     session['carrito']=list()
     session.modified=True
@@ -171,38 +147,58 @@ def registro():
     tarjeta = request.form['tarjeta']
     direccion = request.form['direccion']
     pass1 = request.form['pass1']
+    saldo = random.randint(0, 50)
 
+    salt="superseguridadactivada"
+    clave=hashlib.sha3_384((salt+pass1).encode('utf-8')).hexdigest()
     
-    ret=database.db_user_register(direccion, email, tarjeta, usuario, pass1)
+    # Obtenemos el path a la carpeta usuario
+    app_folder = os.getcwd()
+    path_folder_users=os.path.join(app_folder, "si1users")
+    
 
-    #Si no existe lo añadimos a la base de datos
-    if(ret[0] == True):
-       
-        #Creamos la sesion del usuario
-        customerid = ret[1]
+    if(os.path.isdir(path_folder_users) == False):
+        os.mkdir(path_folder_users)
 
-        session['customerid']=customerid
-        session['usuario']=usuario
-        session['carrito']=list()
-        session.modified = True
+    path_user=os.path.join(app_folder, "si1users", usuario)
 
-        # guardar cookies
-        cookie=make_response(redirect(url_for('principal')))
-        cookie.set_cookie("usuario",usuario)
-
-        return cookie
-
-    elif(ret[0] == False):
+    #Comprobamos si el usuario ya existe
+    if(os.path.isdir(path_user)):
         # flash("El usuario ya existe")
         error="El usuario ya existe"
-        # si hay cookie
+            # si hay cookie
         cookie = request.cookies.get("usuario")
         if cookie == None:
             return render_template('acceso.html', title = "Acceso", cookie="", error=error)
         return render_template('acceso.html', title = "Acceso", user=cookie, error=error)
     
+    #Si no existe creamos la carpeta del usuario con los datos
+    os.mkdir(path_user)
+    path_datos=os.path.join(path_user, "datos.dat")
+    path_compras=os.path.join(path_user, "compras.json")
 
-    return redirect(url_for('showregistroERR', error="Registro mal procesado por la base de datos"))
+    dat = open(path_datos, 'w' ,encoding='utf-8')
+    dat.write(usuario + '\n')
+    dat.write(clave)
+    dat.write('\n'+ email + '\n')
+    dat.write(tarjeta + '\n')
+    dat.write(str(saldo) + '\n')
+    dat.close()
+
+    compras = open(path_compras, 'x' ,encoding='utf-8')
+    compras.close()
+
+    #Creamos la sesion del usuario
+    session['usuario']=usuario
+    session['carrito']=list()
+    session.modified = True
+
+    # guardar cookies
+    cookie=make_response(redirect(url_for('principal')))
+    cookie.set_cookie("usuario",usuario)
+
+    return cookie
+
 
 
 # PAGINA DEL CARRITO
@@ -235,7 +231,6 @@ def carrito():
             carrito_dict[k["id"]] += 1
 
     # redirigir a la pagina principal mostrando solo las coincidencias
-    # return render_template('carrito.html', title = "Pelicula", movies=carrito, total="{0:.2f}".format(total))
     return render_template('carrito.html', title = "Pelicula", movies=catalogue['peliculas'], total="{0:.2f}".format(total), carrito_dict=carrito_dict)
 
 
@@ -278,9 +273,9 @@ def pagar(total):
     if saldo < total:
         catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
         catalogue = json.loads(catalogue_data)
-        # get top sales
-        topSales = database.db_topSales()
-        return render_template('principal.html', total=total, error="Saldo insuficiente",movies=catalogue['peliculas'],title = "Home", topSales = topSales)
+
+        return render_template('principal.html', title = "Home", movies = database.db_movieSelection(),
+                                    topSales = database.db_topSales(), genres=database.db_getGenres())
     
     # actualizar saldo
     datos[4]=str(saldo-total)
@@ -313,7 +308,8 @@ def pagar(total):
     session.modified = True
     # get top sales
     topSales = database.db_topSales()
-    return render_template('principal.html', total=total, error="Compra procesada correctamente",movies=catalogue['peliculas'],title = "Home", topSales = topSales)
+    return render_template('principal.html', total=total, error="Compra procesada correctamente",
+            movies=database.db_movieSelection(),title = "Home", topSales = topSales, genres=database.db_getGenres())
 
 
 
@@ -322,46 +318,70 @@ def historialcompras():
 
     if 'usuario' not in session:
         error="Por favor, primero inicie sesión"
-        # si hay cookie
+            # si hay cookie
         cookie = request.cookies.get("usuario")
         if cookie == None:
             return render_template('acceso.html', title = "Acceso", cookie="", error=error)
         return render_template('acceso.html', title = "Acceso", user=cookie, error=error)
         
     
-    
-    customerid=session['customerid']
+    nombre = session['usuario']
+    usuario=session['usuario']
+    app_folder = os.getcwd()
+    path_user=os.path.join(app_folder, "si1users", usuario)
 
-    
-    saldo = database.db_get_saldo(customerid)
-    compras_cliente = database.db_historial(customerid)
+    catalogue_data = open(os.path.join(path_user,'compras.json'), encoding="utf-8").read()
 
-    return render_template('historialcompras.html', title = "Historial", compras=compras_cliente, saldo=saldo)
+    if not catalogue_data:
+        catalogue = {'peliculas':[]}
+    else:
+        catalogue = json.loads(catalogue_data)
 
+    path_datos=os.path.join(path_user, "datos.dat")
+
+    dat = open(path_datos, 'r' ,encoding='utf-8')
+    content = dat.readlines() 
+    saldo=content[4]
+    saldo=saldo[0:(len(saldo)-1)]
+    dat.close()
+
+    saldo="{0:.2f}".format(float(saldo))
+
+    return render_template('historialcompras.html', title = "Historial", movies=catalogue['peliculas'], saldo=saldo)
 
 @app.route('/aumento_saldo', methods=['POST'])
 def aumento_saldo():
 
     aumento_saldo = request.form['aumento_saldo']
-    customerid=session['customerid']
 
-    database.db_increase_saldo(customerid, aumento_saldo)
+    usuario=session['usuario']
+    app_folder = os.getcwd()
+    path_user=os.path.join(app_folder, "si1users", usuario)
+    path_datos=os.path.join(path_user, "datos.dat")
+
+    dat = open(path_datos, 'r' ,encoding='utf-8')
+    content = dat.readlines() 
+    saldo=content[4]
+    saldo=saldo[0:(len(saldo)-1)]
+    content[4]=str(float(saldo)+float(aumento_saldo))
+    datos_string= content[0]+content[1]+content[2]+content[3]+content[4]
+    dat.close()
+
+    open(path_datos, 'w' ,encoding='utf-8').write(datos_string)
+    
+
 
     return redirect(url_for('historialcompras'))
+
 
 
 @app.route('/usu_conectados', methods=['GET', 'POST'])
 def usu_conectados():
     return str(random.randint(1, 50))
 
-
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    session.pop('customerid', None)
     session.pop('usuario', None)
     session.pop('carrito', None)
     session.modified = True
     return redirect(url_for('principal'))
-
-
-    

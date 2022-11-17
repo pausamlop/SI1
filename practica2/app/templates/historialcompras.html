@@ -12,52 +12,53 @@ carrito
   
   <div class="saldo_form">
 
-    <h1>Historial de las compras realizadas:</h1>
 
-    <div class="saldo">
-      <p>Dispone de un saldo de: {{saldo}}€</p>
-      <br>
-      <p>Inserte una cantidada para aumentar su saldo: 
-          <input type="number" value="" name="aumento_saldo"><span class="barra"></span>
-          <button class="saldo_button" type="submit">Submit</button>
-      </p>
-      <br>
-    </div>
+    <table class="content-table" id="content-table">
+      <caption>Historial de las compras realizadas:</caption>
+
+      <thead>
+        <tr>
+          <th scope="col">Titulo</th>
+          <th scope="col">Fecha de compra</th>
+          <th scope="col">Categoria</th>
+          <th scope="col">Valoracion</th>
+          <th scope="col">Precio</th>
+        </tr>
+      </thead>
 
 
+      <tbody>
+
+        {% for item in movies %}
     
-    {% for item in compras %}
 
-    <div class="compras_orderid">
-        <br>
-        <a class="order" href="#">Orderdate: {{item.orderdate}}</a> 
-        <p class="p_historial">Orderid: {{item.orderid}}</p>
-        
-
-        <table class="detalles_compra" style="display:none">
-            <tr>
-                <th>Titulo</th>
-                <th>Año</th>
-                <th>Prcio</th>
-            </tr>
-        
-        {% for pelis in item.pelis_compra%}
-
-          <tr>
-            <td>{{pelis.movietitle}}</td>
-            <td>{{pelis.year}}</td>
-            <td>{{pelis.price}}</td>
-          </tr>
-
-        {% endfor %}  
-        <br>
-        </table>
-
-    </div>
-    {% endfor %}
+        <tr>
+          <th scope="row"><a href="#" class="row">{{item.titulo}}</a></th>
           
+          <td><div class="respuesta" style="display:none">{{item.fecha}}</div></td>
+          <td><div class="respuesta" style="display:none">{{item.categoria}}</div></td>
+          <td><div class="respuesta" style="display:none">{{item.valoracion_media}}</div></td>
+          <td><div class="respuesta" style="display:none">{{item.precio}}</div></td>
+          
+        </tr>
+
+        
+        {% endfor %}
+        
+      </tbody>
+
+    </table>
 
     
+    <div class="saldo">
+        <p>Dispone de un saldo de: {{saldo}}€</p>
+        <br>
+        <p>Inserte una cantidada para aumentar su saldo: 
+            <input type="number" value="" name="aumento_saldo"><span class="barra"></span>
+            <button class="saldo_button" type="submit">Submit</button>
+        </p>
+        
+    </div>
 
 
   </div>

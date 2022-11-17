@@ -19,13 +19,15 @@ IF (TG_OP = 'INSERT') THEN
     UPDATE
         public.imdb_movies
     SET
-        ratingcount = ratingcount + 1;
+        ratingcount = ratingcount + 1
+    WHERE movieid = NEW.movieid;
     
     -- rating mean
     UPDATE
         public.imdb_movies
     SET
-        ratingmean = round((ratingmean*(ratingcount-1) + NEW.rating)/ratingcount, 2);
+        ratingmean = round((ratingmean*(ratingcount-1) + NEW.rating)/ratingcount, 2)
+    WHERE movieid = NEW.movieid;
 
 
 -- se elimina una valoracion
@@ -35,7 +37,8 @@ ELSIF (TG_OP = 'DELETE') THEN
     UPDATE
         public.imdb_movies
     SET
-        ratingcount = ratingcount - 1;
+        ratingcount = ratingcount - 1
+    WHERE movieid = NEW.movieid;
 
     -- rating mean (dos updates para evitar una division entre 0)
     UPDATE
@@ -43,14 +46,14 @@ ELSIF (TG_OP = 'DELETE') THEN
     SET
         ratingmean = round((ratingmean*(ratingcount+1) - OLD.rating)/ratingcount, 2)
     WHERE 
-        not ratingcount = 0;
+        not ratingcount = 0 AND movieid = NEW.movieid;
 
     UPDATE
         public.imdb_movies
     SET
         ratingmean = 0
     WHERE 
-        ratingcount = 0;
+        ratingcount = 0 AND movieid = OLD.movieid;
 
 
 
@@ -60,7 +63,9 @@ ELSIF (TG_OP = 'UPDATE') THEN
         public.imdb_movies
     SET
         -- rating mean
-        ratingmean = ratingmean - OLD.rating + NEW.rating;
+        ratingmean = ratingmean - OLD.rating + NEW.rating
+    WHERE
+        movieid = NEW.movieid;
 
 
 END IF;
@@ -70,7 +75,6 @@ RETURN NULL;
 END;
 
 $$ LANGUAGE plpgsql;
-
 
 
 -- trigger
