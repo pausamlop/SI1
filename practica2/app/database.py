@@ -586,3 +586,40 @@ def db_historial(customer_id):
 
 
 
+# ############################## CARRITO ##############################
+
+
+# def db_insertMovie()
+#     try:
+#         # conexion a la base de datos
+#         db_conn = None
+#         db_conn = db_engine.connect()
+
+#         nuevo_saldo = db_get_saldo(customerid) + int(aumento_saldo)        
+#         db_conn.execute("UPDATE public.customers SET balance = '"+str(nuevo_saldo)+ "' WHERE customerid= '"+str(customerid)+"'")
+#         db_conn.close()
+
+#         return True
+        
+#     except:
+#         if db_conn is not None:
+#             db_conn.close()
+#         print("Exception in DB access:")
+#         print("-"*60)
+#         traceback.print_exc(file=sys.stderr)
+#         print("-"*60)
+
+#         return 'Something is broken'
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -35,7 +35,7 @@ def valorar(id,val):
         return redirect(url_for('showregistroERR', error="Registrese antes de valorar una pelicula."))
 
     # WARNING HACE FALTA METER EL CUSTOMERID
-    database.db_valorar(id, 3, val)
+    database.db_valorar(id, session['customerid'], val)
 
     print(id, val)
 
