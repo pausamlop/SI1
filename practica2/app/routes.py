@@ -84,11 +84,7 @@ def busqueda():
             coincidencias.append(k)
 
     # busqueda en la base de datos
-    if request.form['buscar']!= "":
-        coincidencias = database.db_searchMovies(request.form['buscar'].lower())
-    else:
-        coincidencias = database.db_filterMovies(request.form['filtro'])
-
+    coincidencias = database.db_searchFilterMovies(request.form['buscar'].lower(), request.form['filtro'])
 
     # get top sales
     topSales = database.db_topSales()

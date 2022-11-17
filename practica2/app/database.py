@@ -76,18 +76,41 @@ def db_movieSelection():
         return 'Something is broken'
 
 
-# busqueda de peliculas
-def db_searchMovies(search):
+# busqueda y filtrado de peliculas
+def db_searchFilterMovies(search, filter):
 
     try:
         # conexion a la base de datos
         db_conn = None
         db_conn = db_engine.connect()
 
-        db_result = db_conn.execute("SELECT public.products.prod_id, public.imdb_movies.movietitle " +
-                "FROM public.products INNER JOIN public.imdb_movies" + 
-                " ON public.products.movieid = public.imdb_movies.movieid "+
-                "WHERE lower(public.imdb_movies.movietitle) like '%%"+str(search)+"%%'")
+        # solo busqueda
+        if search != "" and filter == "":
+            db_result = db_conn.execute("SELECT public.products.prod_id, public.imdb_movies.movietitle " +
+                    "FROM public.products INNER JOIN public.imdb_movies" + 
+                    " ON public.products.movieid = public.imdb_movies.movieid "+
+                    "WHERE lower(public.imdb_movies.movietitle) like '%%"+str(search)+"%%' LIMIT 20")
+
+        # solo filtro
+        elif search == "" and filter != "":
+            db_result = db_conn.execute("SELECT public.products.prod_id, public.imdb_movies.movietitle "+
+            "FROM public.products INNER JOIN public.imdb_movies ON public.products.movieid = public.imdb_movies.movieid "+
+            "INNER JOIN public.imdb_moviegenres ON public.products.movieid = public.imdb_moviegenres.movieid "+
+            "WHERE public.imdb_moviegenres.genreid = "+str(filter) + "LIMIT 20")
+
+        # busqueda y filtro
+        elif search != "" and filter != "":
+            db_result = db_conn.execute("SELECT public.products.prod_id, public.imdb_movies.movietitle "+
+            "FROM public.products INNER JOIN public.imdb_movies ON public.products.movieid = public.imdb_movies.movieid "+
+            "INNER JOIN public.imdb_moviegenres ON public.products.movieid = public.imdb_moviegenres.movieid "+
+            "WHERE public.imdb_moviegenres.genreid = "+str(filter) + 
+            " and lower(public.imdb_movies.movietitle) like '%%"+str(search)+"%%' LIMIT 20")
+
+
+        # ni busqueda ni filtro
+        else:
+            db_conn.close()
+            return db_movieSelection()
 
         db_conn.close()
 
@@ -111,41 +134,6 @@ def db_searchMovies(search):
         return 'Something is broken'
 
 
-# busqueda de peliculas
-def db_filterMovies(filter):
-
-    try:
-        # conexion a la base de datos
-        db_conn = None
-        db_conn = db_engine.connect()
-
-        print("mi filtro es "+ str(filter) )
-
-        db_result = db_conn.execute("SELECT public.products.prod_id, public.imdb_movies.movietitle " +
-                    "FROM public.products INNER JOIN public.imdb_movies ON public.products.movieid = public.imdb_movies.movieid" +
-                    " INNER JOIN public.imdb_moviegenres ON public.products.movieid = public.imdb_moviegenres.movieid"
-                    + "WHERE public.imdb_moviegenres.genreid = " +str(filter) + " LIMIT 10")
-
-        db_conn.close()
-
-        result = []
-        for fila in db_result:
-            d = dict()
-            d['prod_id'] = fila[0]
-            d['title'] = str(fila[1])
-            result.append(d)
-
-        return result
-
-    except:
-        if db_conn is not None:
-            db_conn.close()
-        print("Exception in DB access:")
-        print("-"*60)
-        traceback.print_exc(file=sys.stderr)
-        print("-"*60)
-
-        return 'Something is broken'
 
 
 # getGenres
