@@ -53,7 +53,7 @@ ELSIF (TG_OP = 'DELETE') THEN
     SET
         ratingmean = 0
     WHERE 
-        ratingcount = 0 AND movieid = NEW.movieid;
+        ratingcount = 0 AND movieid = OLD.movieid;
 
 
 
