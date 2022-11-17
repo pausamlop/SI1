@@ -2,19 +2,14 @@
 -- Archivo setPrice.sql
 
 
--- Actualizar price de orderdetail con price de products y con los años que han pasado desde la venta
+-- Actualizar price de orderdetail con price de products
 
 UPDATE
     public.orderdetail
 SET
-    price = public.products.price - 0.02 *
-        ( EXTRACT(YEAR FROM CURRENT_DATE ) - 
-        EXTRACT(YEAR FROM public.orders.orderdate ))
+    price = public.products.price
 FROM
-    public.products,
-    public.orders
-WHERE
-    public.orderdetail.prod_id = public.products.prod_id
-    and public.orderdetail.orderid = public.orders.orderid;
-
+    public.products 
+WHERE 
+	public.orderdetail.prod_id = public.products.prod_id;
 

@@ -6,55 +6,80 @@ pelicula
 
 {% block content %}
 
-
+{% for item in movies %}
+{% if item.id == movie_id %}
 <div class="princip">
   <!-- CLASE FONDO  -->
-  <img src="../static/img/poster.jpg" class="peli_poster">
+  <img src="{{url_for('static', filename=img/poster.jpg)}}" class="peli_poster">
   <div class="peli_form">
-    <h1>{{movies.movietitle}}</h1>
+    <h1>{{item.movietitle}}</h1>
 
 
     <ul>
       <br>
-      <li> <p class="peli_info">Año: {{movies.year}} </p> </li> <br>
-      <li> <p class="peli_info">Descripción: {{movies.description}} </p> </li> <br>
-      <li> <p class="peli_info">Idiomas: {% for item in movies.languages %} {{item}}, {% endfor %} </p> </li> <br>
-      <li> <p class="peli_info">Géneros: {% for item in movies.genres %} {{item}}, {% endfor %} </p> </li> <br>
-      <li> <p class="peli_info">Directores: {% for item in movies.directors %} {{item}}, {% endfor %} </p> </li> <br>
-      <li> <p class="peli_info">Actores: {% for item in movies.actors %} {{item}} - {% endfor %} </p> </li> <br>
-      <li> <p class="peli_info">Precio: {{movies.price}}€ </p> </li> <br>
-      <li> <p class="peli_info">Se han vendido {{movies.sales}} unidades de este producto. </p> </li> <br>
-      <li> <p class="peli_info">Quedan {{movies.stock}} unidades disponibles. </p> </li> <br> <br>
-
+      <li>
+        <p class="peli_info">Año:<br> {{year}} </p>
+      </li>
+      <br>
+      <!-- <li>
+        <p class="peli_info">Precio: {{item.precio}} </p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Director: {{item.director}}</p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Categoria: {{item.categoria}}</p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Año: {{item.anno}}</p>
+      </li>
+      <br>
+      <li>
+        <p class="peli_info">Actores: {% for item in item.actores %} {{item.nombre}} {% endfor %}</p>
+        <br>
+      </li> -->
     </ul>
 
 
+
     <!-- <button>Añadir al carrito</button> -->
-    <a href="{{ url_for('anadircarrito', id=prod_id, next=0) }}" class="peli_anadir"><input type="button"
+    <a href="{{ url_for('anadircarrito', id=item.id, next=0) }}" class="peli_anadir"><input type="button"
         value="Añadir al carrito" class="peli_anadir"></a>
 
     <!-- estrellas -->
 
     <div class="valoracion">
 
-      <p> {{ratings.ratingcount}} usuarios han valorado esta pelicula.</p>
-      <p> La valoracion media es de {{ratings.ratingmean}} estrellas.</p>
+      <p> {{item.numero_valoraciones}} usuarios han valorado esta pelicula.</p>
+      <p> La valoracion media es de {{item.valoracion_media}} estrellas.</p>
       <p> Danos tu opinion: </p>
       <br>
 
-      <a href="{{ url_for('valorar', id=prod_id, val=1) }}"><input type="button" value="☆"></a>
-      <a href="{{ url_for('valorar', id=prod_id, val=2) }}"><input type="button" value="☆"></a>
-      <a href="{{ url_for('valorar', id=prod_id, val=3) }}"><input type="button" value="☆"></a>
-      <a href="{{ url_for('valorar', id=prod_id, val=4) }}"><input type="button" value="☆"></a>
-      <a href="{{ url_for('valorar', id=prod_id, val=5) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=1) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=2) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=3) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=4) }}"><input type="button" value="☆"></a>
+      <a href="{{ url_for('valorar', id=item.id, val=5) }}"><input type="button" value="☆"></a>
 
     </div>
+
+
+
+
+
+
+
+
 
 
   </div>
 
 </div>
-
+{% endif%}
+{% endfor %}
 
 
 {% endblock %}

@@ -12,6 +12,13 @@ OR REPLACE FUNCTION updOrders() RETURNS TRIGGER AS $$
 BEGIN
 
 
+-- cambiar la fecha
+UPDATE
+    public.orders
+SET
+    orderdate = CURRENT_DATE;
+
+
 -- se inserta un producto en el carrito (se añade un orderdetail)
 IF (TG_OP = 'INSERT') THEN
     UPDATE
@@ -20,9 +27,7 @@ IF (TG_OP = 'INSERT') THEN
         -- net amount
         netamount = netamount + NEW.quantity * NEW.price,
         -- total amount
-        totalamount = round ((netamount + NEW.quantity * NEW.price)* (1 + public.orders.tax/100), 2)
-    WHERE 
-        orderid = NEW.orderid;
+        totalamount = round ((netamount + NEW.quantity * NEW.price)* (1 + public.orders.tax/100), 2);
 
 
 -- se elimina un producto del carrito
@@ -33,9 +38,7 @@ ELSIF (TG_OP = 'DELETE') THEN
         -- net amount
         netamount = netamount - OLD.quantity * OLD.price,
         -- total amount
-        totalamount = round ((netamount - OLD.quantity * OLD.price)* (1 + public.orders.tax/100), 2)
-    WHERE 
-        orderid = OLD.orderid;
+        totalamount = round ((netamount - OLD.quantity * OLD.price)* (1 + public.orders.tax/100), 2);
 
 
 -- se actualiza la cantidad/precio de un producto del carrito
@@ -46,9 +49,7 @@ ELSIF (TG_OP = 'UPDATE') THEN
         -- net amount
         netamount = netamount - OLD.quantity * OLD.price + NEW.quantity * NEW.price,
         -- total amount
-        totalamount = round ((netamount - OLD.quantity * OLD.price + NEW.quantity * NEW.price) * (1 + public.orders.tax/100), 2)
-    WHERE 
-        orderid = NEW.orderid;
+        totalamount = round ((netamount - OLD.quantity * OLD.price + NEW.quantity * NEW.price) * (1 + public.orders.tax/100), 2);
 
 
 END IF;
@@ -62,7 +63,7 @@ $$ LANGUAGE plpgsql;
 
 
 -- trigger
-CREATE OR REPLACE TRIGGER UO AFTER
+CREATE TRIGGER UO AFTER
 INSERT OR DELETE OR UPDATE
     ON public.orderdetail FOR EACH ROW EXECUTE PROCEDURE updOrders();
 

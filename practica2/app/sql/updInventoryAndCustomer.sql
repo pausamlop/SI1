@@ -48,7 +48,7 @@ $$ LANGUAGE plpgsql;
 
 
 -- trigger para caundo un pedido pase al estado 'Paid' por lo que será solo para update
-CREATE OR REPLACE TRIGGER UIAC AFTER
+CREATE TRIGGER UIAC AFTER
 UPDATE OF status
 ON  public.orders FOR EACH ROW 
 WHEN (OLD.status != 'Paid' and NEW.status = 'Paid')

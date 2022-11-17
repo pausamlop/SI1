@@ -40,9 +40,9 @@ ADD
 ALTER TABLE
     public.imdb_directormovies
 DROP 
-    CONSTRAINT imdb_directormovies_movieid_fkey,
+    CONSTRAINT imdb_directormovies_directorid_fkey,
 ADD
-    CONSTRAINT imdb_directormovies_movieid_fkey FOREIGN KEY (movieid) 
+    CONSTRAINT imdb_directormovies_movieid_fkey1 FOREIGN KEY (movieid) 
     REFERENCES public.imdb_movies (movieid) ON DELETE CASCADE;
 
 -- si se borra una pelicula -> borrar products
