@@ -20,20 +20,10 @@ def principal():
     catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
 
-    # get top sales
-    topSales = database.db_topSales()
 
-    print(database.db_movieSelection())
-    # movietitle
-    # year
 
-    # genero
-    # idioma
-    # country
-    # actores
-    # director
-
-    return render_template('principal.html', title = "Home", movies=[], topSales = topSales)
+    return render_template('principal.html', title = "Home", movies = database.db_movieSelection(), 
+                                topSales = database.db_topSales(), genres=database.db_getGenres())
 
 @app.route('/frame')
 def frame():
@@ -74,9 +64,10 @@ def valorar(id,val):
 # PAGINA DE DETALLE DE LAS PELICULAS
 @app.route('/pelicula/<int:id>')
 def pelicula(id):
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    return render_template('pelicula.html', title = "Pelicula", movie_id=id, movies=catalogue['peliculas'])
+
+    d = database.db_movieData(id)
+
+    return render_template('pelicula.html', title = "Pelicula", prod_id=id, movies=d)
 
 # BUSQUEDA DE PELICULAS
 @app.route('/busqueda', methods=['POST'])
@@ -92,11 +83,18 @@ def busqueda():
         if (request.form['buscar'].lower() in k["titulo"].lower()) and (request.form['filtro'] in k["categoria"]):
             coincidencias.append(k)
 
+    # busqueda en la base de datos
+    if request.form['buscar']!= "":
+        coincidencias = database.db_searchMovies(request.form['buscar'].lower())
+    else:
+        coincidencias = database.db_filterMovies(request.form['filtro'])
+
 
     # get top sales
     topSales = database.db_topSales()
     # redirigir a la pagina principal mostrando solo las coincidencias
-    return render_template('principal.html', title = "Pelicula", movie_id=id, movies=coincidencias, topSales = topSales)
+    return render_template('principal.html', title = "Pelicula", movie_id=id, 
+            movies=coincidencias, topSales = topSales, genres=database.db_getGenres())
 
 
 
@@ -305,9 +303,9 @@ def pagar(total):
     if saldo < total:
         catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
         catalogue = json.loads(catalogue_data)
-        # get top sales
-        topSales = database.db_topSales()
-        return render_template('principal.html', total=total, error="Saldo insuficiente",movies=catalogue['peliculas'],title = "Home", topSales = topSales)
+
+        return render_template('principal.html', title = "Home", movies = database.db_movieSelection(),
+                                    topSales = database.db_topSales(), genres=database.db_getGenres())
     
     # actualizar saldo
     datos[4]=str(saldo-total)
@@ -340,7 +338,8 @@ def pagar(total):
     session.modified = True
     # get top sales
     topSales = database.db_topSales()
-    return render_template('principal.html', total=total, error="Compra procesada correctamente",movies=catalogue['peliculas'],title = "Home", topSales = topSales)
+    return render_template('principal.html', total=total, error="Compra procesada correctamente",
+            movies=database.db_movieSelection(),title = "Home", topSales = topSales, genres=database.db_getGenres())
 
 
 

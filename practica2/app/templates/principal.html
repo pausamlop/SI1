@@ -21,14 +21,14 @@ principal
 
         <select name="filtro" id="filtro" class="princip_filtro">
             <option class="princip_filtro" value=""></option>
-            <option class="princip_filtro" value="M">Musical</option>
-            <option class="princip_filtro" value="A">Animación</option>
-            <option class="princip_filtro" value="F">Fantasia</option>
-            <option class="princip_filtro" value="T">Terror</option>
+            {% for item in genres %}
+                <option class="princip_filtro" value={{item.genreid}}>{{item.genre}}</option>
+            {% endfor %}
         </select>
 
         <button id="princip_button" type="submit">Buscar</button>
 
+        
 
     </div>
 
@@ -45,13 +45,15 @@ principal
 
     <!-- imprimir los posters con su fondo y titulo -->
     {% for item in movies %}
-    <a href="{{ url_for('pelicula', id=item.titulo) }}">
+    <a href="{{ url_for('pelicula', id=item.prod_id) }}">
         <div class="polaroid">
-            <img src="{{url_for('static', filename=img/poster.jpg)}}" class="polaroid_img">
-            <h1 class="polaroid_txt">{{item.titulo}} </h1>
+            <img src="../static/img/poster.jpg" class="polaroid_img">
+            <h1 class="polaroid_txt">{{item.title}} </h1>
         </div>
     </a>
     {% endfor %}
+
+    
 
 
 
