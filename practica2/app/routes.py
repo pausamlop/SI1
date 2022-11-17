@@ -92,34 +92,27 @@ def acceso():
     usuario = request.form['username']
     pass1 = request.form['pass']
 
-    app_folder = os.getcwd()
-    path_user=os.path.join(app_folder, "si1users", usuario)
-
+    
     #Comprobamos si el usuario existe
-    if(os.path.isdir(path_user) == False):
+    if(database.db_user_exists(usuario) == False):
         error="El usuario no existe"
         return render_template('registro.html', error=error, title = "Registro")
 
-    #Leemos la clave del dichero datos.dat del usuario
-    path_datos=os.path.join(path_user, "datos.dat")
-    dat = open(path_datos, 'r' ,encoding='utf-8')
-    content = dat.readlines() 
-    clave_dat=content[1]
-    clave_dat=clave_dat[0:(len(clave_dat)-1)]
-    dat.close()
-
-    salt="superseguridadactivada"
-    clave=hashlib.sha3_384((salt+pass1).encode('utf-8')).hexdigest()
-
+ 
     #Comparamos las claves
-    if(clave_dat != clave):
+    ret = database.db_user_login(usuario, pass1)
+    
+    if( ret[0]== False):
         error="La clave no es corecta"
-            # si hay cookie
+        # si hay cookie
         cookie = request.cookies.get("usuario")
         if cookie == None:
             return render_template('acceso.html', title = "Acceso", cookie="", error=error)
-        return render_template('acceso.html', title = "Acceso", user=cookie,error=error)
+        return render_template('acceso.html', title = "Acceso", user=cookie, error=error)
     
+    customerid = ret[1]
+
+    session['customerid']=customerid
     session['usuario']=usuario
     session['carrito']=list()
     session.modified=True
@@ -147,57 +140,38 @@ def registro():
     tarjeta = request.form['tarjeta']
     direccion = request.form['direccion']
     pass1 = request.form['pass1']
-    saldo = random.randint(0, 50)
 
-    salt="superseguridadactivada"
-    clave=hashlib.sha3_384((salt+pass1).encode('utf-8')).hexdigest()
     
-    # Obtenemos el path a la carpeta usuario
-    app_folder = os.getcwd()
-    path_folder_users=os.path.join(app_folder, "si1users")
-    
+    ret=database.db_user_register(direccion, email, tarjeta, usuario, pass1)
 
-    if(os.path.isdir(path_folder_users) == False):
-        os.mkdir(path_folder_users)
+    #Si no existe lo añadimos a la base de datos
+    if(ret[0] == True):
+       
+        #Creamos la sesion del usuario
+        customerid = ret[1]
 
-    path_user=os.path.join(app_folder, "si1users", usuario)
+        session['customerid']=customerid
+        session['usuario']=usuario
+        session['carrito']=list()
+        session.modified = True
 
-    #Comprobamos si el usuario ya existe
-    if(os.path.isdir(path_user)):
+        # guardar cookies
+        cookie=make_response(redirect(url_for('principal')))
+        cookie.set_cookie("usuario",usuario)
+
+        return cookie
+
+    elif(ret[0] == False):
         # flash("El usuario ya existe")
         error="El usuario ya existe"
-            # si hay cookie
+        # si hay cookie
         cookie = request.cookies.get("usuario")
         if cookie == None:
             return render_template('acceso.html', title = "Acceso", cookie="", error=error)
         return render_template('acceso.html', title = "Acceso", user=cookie, error=error)
     
-    #Si no existe creamos la carpeta del usuario con los datos
-    os.mkdir(path_user)
-    path_datos=os.path.join(path_user, "datos.dat")
-    path_compras=os.path.join(path_user, "compras.json")
 
-    dat = open(path_datos, 'w' ,encoding='utf-8')
-    dat.write(usuario + '\n')
-    dat.write(clave)
-    dat.write('\n'+ email + '\n')
-    dat.write(tarjeta + '\n')
-    dat.write(str(saldo) + '\n')
-    dat.close()
-
-    compras = open(path_compras, 'x' ,encoding='utf-8')
-    compras.close()
-
-    #Creamos la sesion del usuario
-    session['usuario']=usuario
-    session['carrito']=list()
-    session.modified = True
-
-    # guardar cookies
-    cookie=make_response(redirect(url_for('principal')))
-    cookie.set_cookie("usuario",usuario)
-
-    return cookie
+    return redirect(url_for('showregistroERR', error="Registro mal procesado por la base de datos"))
 
 
 
@@ -315,61 +289,33 @@ def pagar(total):
 
 @app.route('/historialcompras', methods=['GET', 'POST'])
 def historialcompras():
-
     if 'usuario' not in session:
         error="Por favor, primero inicie sesión"
-            # si hay cookie
+        # si hay cookie
         cookie = request.cookies.get("usuario")
         if cookie == None:
             return render_template('acceso.html', title = "Acceso", cookie="", error=error)
         return render_template('acceso.html', title = "Acceso", user=cookie, error=error)
         
     
-    nombre = session['usuario']
-    usuario=session['usuario']
-    app_folder = os.getcwd()
-    path_user=os.path.join(app_folder, "si1users", usuario)
+    
+    customerid=session['customerid']
 
-    catalogue_data = open(os.path.join(path_user,'compras.json'), encoding="utf-8").read()
+    
+    saldo = database.db_get_saldo(customerid)
+    compras_cliente = database.db_historial(customerid)
 
-    if not catalogue_data:
-        catalogue = {'peliculas':[]}
-    else:
-        catalogue = json.loads(catalogue_data)
+    return render_template('historialcompras.html', title = "Historial", compras=compras_cliente, saldo=saldo)
 
-    path_datos=os.path.join(path_user, "datos.dat")
 
-    dat = open(path_datos, 'r' ,encoding='utf-8')
-    content = dat.readlines() 
-    saldo=content[4]
-    saldo=saldo[0:(len(saldo)-1)]
-    dat.close()
-
-    saldo="{0:.2f}".format(float(saldo))
-
-    return render_template('historialcompras.html', title = "Historial", movies=catalogue['peliculas'], saldo=saldo)
 
 @app.route('/aumento_saldo', methods=['POST'])
 def aumento_saldo():
 
     aumento_saldo = request.form['aumento_saldo']
+    customerid=session['customerid']
 
-    usuario=session['usuario']
-    app_folder = os.getcwd()
-    path_user=os.path.join(app_folder, "si1users", usuario)
-    path_datos=os.path.join(path_user, "datos.dat")
-
-    dat = open(path_datos, 'r' ,encoding='utf-8')
-    content = dat.readlines() 
-    saldo=content[4]
-    saldo=saldo[0:(len(saldo)-1)]
-    content[4]=str(float(saldo)+float(aumento_saldo))
-    datos_string= content[0]+content[1]+content[2]+content[3]+content[4]
-    dat.close()
-
-    open(path_datos, 'w' ,encoding='utf-8').write(datos_string)
-    
-
+    database.db_increase_saldo(customerid, aumento_saldo)
 
     return redirect(url_for('historialcompras'))
 
@@ -381,6 +327,7 @@ def usu_conectados():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
+    session.pop('customerid', None)
     session.pop('usuario', None)
     session.pop('carrito', None)
     session.modified = True

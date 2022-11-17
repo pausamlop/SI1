@@ -1,7 +1,7 @@
 $(document).ready(function(){ 
     
-    $('.row').on('click',function(){
-       $('.respuesta').toggle();
+    $('.order').on('click',function(){
+       $(this).siblings('.detalles_compra').toggle();
        
     });
 });
