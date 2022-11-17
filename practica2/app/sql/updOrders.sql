@@ -12,13 +12,6 @@ OR REPLACE FUNCTION updOrders() RETURNS TRIGGER AS $$
 BEGIN
 
 
--- cambiar la fecha
-UPDATE
-    public.orders
-SET
-    orderdate = CURRENT_DATE;
-
-
 -- se inserta un producto en el carrito (se añade un orderdetail)
 IF (TG_OP = 'INSERT') THEN
     UPDATE
@@ -69,7 +62,7 @@ $$ LANGUAGE plpgsql;
 
 
 -- trigger
-CREATE TRIGGER UO AFTER
+CREATE OR REPLACE TRIGGER UO AFTER
 INSERT OR DELETE OR UPDATE
     ON public.orderdetail FOR EACH ROW EXECUTE PROCEDURE updOrders();
 

@@ -29,14 +29,15 @@ CREATE VIEW ActorGeneroPart AS
 
 SELECT
     AM.actorid as actorid,
-    MG.genre as genre,
+    G.genre as genre,
     COUNT (DISTINCT AM.movieid) as participation
 FROM
     public.imdb_actormovies as AM
     INNER JOIN public.imdb_moviegenres as MG ON AM.movieid = MG.movieid
+    INNER JOIN public.imdb_genres as G ON G.genreid = MG.genreid
 GROUP BY
     AM.actorid,
-    MG.genre
+    G.genre
 HAVING
     COUNT (DISTINCT AM.movieid) >= 4;
 
@@ -53,14 +54,14 @@ FROM
         -- si hay varias movieid debut (mismo año), se les asigna el mismo rango 
         SELECT
             AM.actorid as actorid,
-            MG.genre as genre,
+            G.genre as genre,
             AM.movieid as movieid,
             M.year as fecha,
             -- ordena de menor a mayor las fechas dependiendo del actor y el genero
             -- rango se reinicia cada vez que el actor o el genero cambian
             RANK() OVER (
                 PARTITION BY AM.actorid,
-                MG.genre
+                G.genre
                 ORDER BY
                     M.year ASC
             ) as rango
@@ -68,6 +69,7 @@ FROM
             public.imdb_actormovies as AM
             INNER JOIN public.imdb_movies as M ON AM.movieid = M.movieid
             INNER JOIN public.imdb_moviegenres as MG ON MG.movieid = AM.movieid
+            INNER JOIN public.imdb_genres as G ON G.genreid = MG.genreid
     ) as ActorGeneroFechas
 WHERE
     -- elegir la fecha mas antigua para cada actor-genero

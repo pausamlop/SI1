@@ -45,7 +45,7 @@ END;
 
 $$ LANGUAGE plpgsql;
 
-
+DROP TRIGGER IF EXISTS UIAC;
 
 -- trigger para caundo un pedido pase al estado 'Paid' por lo que será solo para update
 CREATE TRIGGER UIAC AFTER
