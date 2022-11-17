@@ -135,7 +135,6 @@ def db_searchFilterMovies(search, filter):
 
 
 
-
 # getGenres
 def db_getGenres():
     try:
@@ -279,5 +278,90 @@ def db_movieData(id):
         print("-"*60)
 
         return 'Something is broken'
+
+
+
+# valorar
+def db_valorar(prodid, customerid, rating):
+    try:
+        # conexion a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # buscar el movie id
+        db_result = db_conn.execute("SELECT public.imdb_movies.movieid " +
+                    "FROM public.imdb_movies INNER JOIN public.products " +
+                    "ON public.imdb_movies.movieid = public.products.movieid " +
+                    "WHERE public.products.prod_id = " + str(prodid))
+
+        for fila in db_result:
+            movieid = str(fila[0])
+
+        print("este es mi movie id " + movieid)
+
+        # comprobar si hay entrada de movieid-customerid en ratings
+        db_result = db_conn.execute("SELECT * FROM public.ratings "+
+                    "WHERE movieid = "+ movieid +" and customerid = " + str(customerid))
+
+        # no hay entrada: insert
+        if len(list(db_result)) == 0:
+            db_conn.execute("INSERT INTO public.ratings " +
+                    "VALUES ("+movieid+","+str(customerid)+","+str(rating)+")")
+
+        # hay entrada: update
+        else:
+            print("existo")
+            db_conn.execute("UPDATE public.ratings SET rating = "+str(rating)+
+                    " WHERE movieid = "+movieid+ "and customerid = "+ str(customerid))
+
+        db_conn.close()
+      
+        return
+    except:
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return 'Something is broken'
+
+
+
+# getRatings
+def db_getRatings(prodid):
+    try:
+        # conexion a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        print("este es mi prodid " +str(prodid))
+        
+        # Escoger una seleccion de productos
+        db_result = db_conn.execute("SELECT public.imdb_movies.ratingmean, public.imdb_movies.ratingcount "+
+                    "FROM public.imdb_movies INNER JOIN public.products " +
+                    "ON public.imdb_movies.movieid = public.products.movieid " 
+                    + "WHERE public.products.prod_id =" + str(prodid))
+
+        db_conn.close()
+
+        # conseguir los datos
+        for fila in db_result:
+            d = {}
+            d['ratingmean'] = str(fila[0])
+            d['ratingcount'] = str(fila[1])
+        
+        return d
+    except:
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return 'Something is broken'
+
 
 

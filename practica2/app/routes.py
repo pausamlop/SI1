@@ -17,10 +17,6 @@ from datetime import date
 @app.route('/')
 @app.route('/principal', methods=['GET', 'POST'])
 def principal():
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-
-
 
     return render_template('principal.html', title = "Home", movies = database.db_movieSelection(), 
                                 topSales = database.db_topSales(), genres=database.db_getGenres())
@@ -33,27 +29,13 @@ def frame():
 # VALORACION DE UNA PELICULA
 @app.route('/valorar/<int:id>/<int:val>')
 def valorar(id,val):
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
 
     # si el usuario no esta registrado, mandar al registro
     if not session.get('usuario'):
         return redirect(url_for('showregistroERR', error="Registrese antes de valorar una pelicula."))
 
-    # encontrar peli a valorar
-    for k in catalogue['peliculas']:
-        if k["id"] == id:
-            # encontrar antigua valoracion
-            print('valoracion media:' + str(k["valoracion_media"]))
-            # encontrar numero de usuarios que han votado
-            print('numero valoraciones'+ str(k["numero_valoraciones"]))
-            # calcular nueva media con la valoracion = (antigua*usuarios + nueva)/usuarios+1
-            k['valoracion_media']= (float(k['valoracion_media'])*k["numero_valoraciones"]+val)/(k["numero_valoraciones"]+1)
-            k['valoracion_media']="{0:.2f}".format(k['valoracion_media'])
-            k["numero_valoraciones"]+=1
-
-            # actualizar catalogue
-            json.dump(catalogue, open(os.path.join(app.root_path,'catalogue/inventario.json'), "w"))
+    # WARNING HACE FALTA METER EL CUSTOMERID
+    database.db_valorar(id, 3, val)
 
     print(id, val)
 
@@ -65,23 +47,16 @@ def valorar(id,val):
 @app.route('/pelicula/<int:id>')
 def pelicula(id):
 
-    d = database.db_movieData(id)
+    d1 = database.db_movieData(id)
+    d2 = database.db_getRatings(id)
 
-    return render_template('pelicula.html', title = "Pelicula", prod_id=id, movies=d)
+    return render_template('pelicula.html', title = "Pelicula", prod_id=id, movies=d1, ratings=d2)
+
+
 
 # BUSQUEDA DE PELICULAS
 @app.route('/busqueda', methods=['POST'])
 def busqueda():
-    # cargar catalogo de peliculas
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-
-    # buscar en los catalogos y anadir las peliculas con coincidencias
-    coincidencias = list()
-    for k in catalogue['peliculas']:
-        # busqueda y filtro
-        if (request.form['buscar'].lower() in k["titulo"].lower()) and (request.form['filtro'] in k["categoria"]):
-            coincidencias.append(k)
 
     # busqueda en la base de datos
     coincidencias = database.db_searchFilterMovies(request.form['buscar'].lower(), request.form['filtro'])
@@ -256,7 +231,6 @@ def carrito():
             carrito_dict[k["id"]] += 1
 
     # redirigir a la pagina principal mostrando solo las coincidencias
-    # return render_template('carrito.html', title = "Pelicula", movies=carrito, total="{0:.2f}".format(total))
     return render_template('carrito.html', title = "Pelicula", movies=catalogue['peliculas'], total="{0:.2f}".format(total), carrito_dict=carrito_dict)
 
 
