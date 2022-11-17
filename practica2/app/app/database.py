@@ -481,7 +481,7 @@ def db_get_saldo(customerid):
         db_conn = db_engine.connect()
 
         
-        db_balance = db_conn.execute("SELECT balance FROM public.customers WHERE customerid ='"+str(customerid)+"'")
+        db_balance = db_conn.execute("SELECT balance FROM public.customers WHERE customerid ='"+customerid+"'")
         rows = db_balance.fetchall()
         balance=rows[0][0]
 
@@ -506,8 +506,8 @@ def db_increase_saldo(customerid, aumento_saldo):
         db_conn = None
         db_conn = db_engine.connect()
 
-        nuevo_saldo = db_get_saldo(customerid) + int(aumento_saldo)        
-        db_conn.execute("UPDATE public.customers SET balance = '"+str(nuevo_saldo)+ "' WHERE customerid= '"+str(customerid)+"'")
+        nuevo_saldo = db_get_saldo(usuario) + int(aumento_saldo)        
+        db_conn.execute("UPDATE public.customers SET balance = '"+str(nuevo_saldo)+ "' WHERE customerid= '"+customerid+"'")
         db_conn.close()
 
         return True
@@ -584,7 +584,6 @@ def db_historial(customer_id):
 
 
 
-
 ############################## PAGINA CARRITO ##############################
 
 def db_show_carrito(customerid):
@@ -593,209 +592,21 @@ def db_show_carrito(customerid):
         db_conn = None
         db_conn = db_engine.connect()
  
-        db_orderid = db_conn.execute("SELECT orderid, totalamount FROM orders WHERE customerid='"+str(customerid)+"' AND status is NULL")
-        
-        if db_orderid.rowcount == 0:
-            return False
-
-        rows = db_orderid.fetchall()
-        orderid=rows[0][0]  
-        totalamount=rows[0][1] 
+        db_orderid = db_conn.execute("SELECT orderid FROM orders WHERE customerid='"+customerid+"' AND status is NULL")
+        rows = db_orderid()
+        orderid=rows[0][0]    
         
 
-        db_pelis_carro = db_conn.execute("SELECT C.prod_id, D.movietitle, B.quantity \
+        db_orderid = db_conn.execute("SELECT C.prod_id, D.movietitle, B.quantity \
                                         FROM public.orders as A \
                                             INNER JOIN public.orderdetail AS B on A.orderid = B.orderid \
                                             INNER JOIN public.products as C on B.prod_id = C.prod_id \
                                             INNER JOIN public.imdb_movies as D on C.movieid = D.movieid \
-                                        WHERE A.orderid="+str(orderid)+" \
+                                        WHERE A.orderid=1 \
                                         ORDER BY A.orderid")
-        
-        carro=[]
-
-        for peli in db_pelis_carro:
-            pelicula= {"prod_id": str(peli[0]), "titulo":str(peli[1]), "quantity":str(peli[2]) }
-
-            carro.append(pelicula)
-
-        print("cosas del carro")
-        print(carro)
-
 
         db_conn.close()
 
-        return carro, totalamount
-        
-    except:
-        if db_conn is not None:
-            db_conn.close()
-        print("Exception in DB access:")
-        print("-"*60)
-        traceback.print_exc(file=sys.stderr)
-        print("-"*60)
-
-        return 'Something is broken'
-
-
-
-
-
-def db_insertMovie(customerid, prod_id):
-    try:
-        # conexion a la base de datos
-        db_conn = None
-        db_conn = db_engine.connect()
-
-        # ver si existe un order
-        db_result = db_conn.execute("SELECT * FROM public.orders WHERE customerid = "+str(customerid)+" and status is null")
-
-        # si no existe, crear uno
-        if len(list(db_result)) == 0:
-            print("no existe un order")
-            # obtener nueva pkey
-            db_result = db_conn.execute("SELECT MAX(orderid)+1 from public.orders")
-            for fila in db_result:
-                pkey=str(fila[0])
-            #insertar order
-            db_conn.execute("INSERT INTO public.orders VALUES ("+pkey+", now(), "+str(customerid)+", 0, 15, 0, null)")
-    
-        
-        # obtener orderid
-        else:
-            db_result = db_conn.execute("SELECT orderid FROM public.orders WHERE customerid = "+str(customerid)+" and status is null")
-            for fila in db_result:
-                pkey=str(fila[0])
-            # ver si ya hay order detial
-            db_result = db_conn.execute("SELECT * FROM public.orderdetail WHERE prod_id="+str(prod_id) +"and orderid="+str(pkey))
-            if len(list(db_result)) != 0: 
-                return db_upQuantity(customerid,prod_id)
-
-
-        # precio
-        db_result = db_conn.execute("SELECT public.products.price FROM public.products WHERE public.products.prod_id=" +str(prod_id))
-        for fila in db_result:
-            price=str(fila[0])
-
-        print("este es el precio" + price)
-        
-        # añadir orderdetails
-        db_conn.execute("INSERT INTO public.orderdetail VALUES ("+str(pkey)+", "+str(prod_id)+","+ str(price)+", 1)")
-
-        db_conn.close()
-        
-    except:
-        if db_conn is not None:
-            db_conn.close()
-        print("Exception in DB access:")
-        print("-"*60)
-        traceback.print_exc(file=sys.stderr)
-        print("-"*60)
-
-        return 'Something is broken'
-
-
-
-def db_upQuantity(customerid,prod_id):
-    try:
-        # conexion a la base de datos
-        db_conn = None
-        db_conn = db_engine.connect()
-
-        # obtener orderid
-        db_result = db_conn.execute("SELECT orderid FROM public.orders WHERE customerid = "+str(customerid)+" and status is null")
-        for fila in db_result:
-            pkey=str(fila[0])
-
-        # obtener la cantidad nueva
-        db_result = db_conn.execute("SELECT quantity+1 FROM public.orderdetail WHERE prod_id = "+str(prod_id)+" and orderid=" + str(pkey))
-        for fila in db_result:
-            q=str(fila[0])
-
-        # modificar order
-        db_result = db_conn.execute("UPDATE public.orderdetail SET quantity="+str(q)+" WHERE prod_id = "+str(prod_id)+" and orderid=" + str(pkey))
-        db_conn.close()
-        
-    except:
-        if db_conn is not None:
-            db_conn.close()
-        print("Exception in DB access:")
-        print("-"*60)
-        traceback.print_exc(file=sys.stderr)
-        print("-"*60)
-
-        return 'Something is broken'
-
-    
-
-def db_deletetMovie(customerid, prod_id):
-    try:
-        # conexion a la base de datos
-        db_conn = None
-        db_conn = db_engine.connect()
-
-        # obtener orderid
-        db_result = db_conn.execute("SELECT orderid FROM public.orders WHERE customerid = "+str(customerid)+" and status is null")
-        for fila in db_result:
-            pkey=str(fila[0])
-
-
-        # obtener la cantidad
-        db_result = db_conn.execute("SELECT quantity FROM public.orderdetail WHERE prod_id = "+str(prod_id)+" and orderid=" + str(pkey))
-        for fila in db_result:
-            q=str(fila[0])
-
-
-        # si la cantidad es 1 eliminar la orderdetail
-        if q == '1':
-            db_conn.execute("DELETE FROM public.orderdetail WHERE orderid="+pkey+" and prod_id = "+str(prod_id))
-
-        # si la cantidad es > 2 modificar quantity
-        db_result = db_conn.execute("UPDATE public.orderdetail SET quantity="+str(q)+"-1 WHERE prod_id = "+str(prod_id)+" and orderid=" + str(pkey))
-        db_conn.close()
-    except:
-        if db_conn is not None:
-            db_conn.close()
-        print("Exception in DB access:")
-        print("-"*60)
-        traceback.print_exc(file=sys.stderr)
-        print("-"*60)
-
-        return 'Something is broken'
-
-
-def db_pay(customerid,total):
-    try:
-        # conexion a la base de datos
-        db_conn = None
-        db_conn = db_engine.connect()
-
-        # obtener orderid y totalamount
-        db_result = db_conn.execute("SELECT orderid FROM public.orders WHERE customerid = "+str(customerid)+" and status is null")
-        for fila in db_result:
-            pkey=str(fila[0])
-
-
-        # obtener el saldo
-        db_result = db_conn.execute("SELECT balance FROM public.customers WHERE customerid ="+str(customerid))  
-        for fila in db_result:
-            balance=str(fila[0])   
-
-        # no hay suficiente cantidad
-        if float(balance)-float(total) < 0:
-            print(float(balance))
-            print(float(total))
-            return False 
-
-        
-        # hay cantidad
-        restante = float(balance)-float(total)
-        db_conn.execute("UPDATE public.customers SET balance = "+str(restante) +"WHERE customerid ="+str(customerid))
-
-
-        # hacer update de la order
-        db_result = db_conn.execute("UPDATE public.orders SET status='Paid' WHERE orderid=" + str(pkey))
-
-        db_conn.close()
         return True
         
     except:
@@ -807,13 +618,6 @@ def db_pay(customerid,total):
         print("-"*60)
 
         return 'Something is broken'
-
-
-
-
-
-
-
 
 
 

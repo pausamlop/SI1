@@ -178,37 +178,29 @@ def registro():
 # PAGINA DEL CARRITO
 @app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
-    # cargar catalogo de peliculas
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
 
-    # buscar las que estan en el carrito
-    carrito = list()
-    total=0
+    customerid = session['customerid']
+    ret = database.db_show_carrito(customerid)
 
-    if not session.get('carrito'):
-        session['carrito']=[]
-        session.modified=True
+    print("este es mi customer id: "+str(customerid))
 
-    for j in session['carrito']:
-        for k in catalogue['peliculas']:
-            if k["id"] == j:
-                carrito.append(k)
-                total+=k["precio"]
+    if(ret == False):
+        pelis_carro=[]
+        totalamount=0
 
-    # diccionario con el id y la cantidad en el carrito
-    carrito_dict = dict()
-    for k in carrito:
-        if not carrito_dict.get(k["id"]):
-            carrito_dict[k["id"]] = 1
-        else:
-            carrito_dict[k["id"]] += 1
+    else:   
+        pelis_carro = ret[0]
+        totalamount = ret[1]
+        print(totalamount)
+    
+ 
 
     # redirigir a la pagina principal mostrando solo las coincidencias
-    return render_template('carrito.html', title = "Pelicula", movies=catalogue['peliculas'], total="{0:.2f}".format(total), carrito_dict=carrito_dict)
+    #return render_template('carrito.html', title = "Pelicula", movies=catalogue['peliculas'], total="{0:.2f}".format(total), carrito_dict=carrito_dict)
+    return render_template('carrito.html', title = "Pelicula", total=totalamount, pelis_carro=pelis_carro)
 
 
-# ANADIR PELICULA AL CARRITO
+#ANADIR PELICULA AL CARRITO
 @app.route('/anadircarrito/<int:id>/<int:next>')
 def anadircarrito(id, next):
     # usuario anonimo
@@ -217,6 +209,7 @@ def anadircarrito(id, next):
     # anadir pelicula
     session['carrito'].append(id)
     session.modified=True
+    database.db_insertMovie(session['customerid'], id)
     # aumentada la cantidad desde la pagina de detalle
     if next == 0:
         return redirect('/principal')
@@ -230,6 +223,7 @@ def eliminarcarrito(id):
     # quitar pelicula
     session['carrito'].remove(id)
     session.modified=True
+    database.db_deletetMovie(session['customerid'], id)
     return redirect('/carrito')
 
 
@@ -239,44 +233,11 @@ def pagar(total):
     # si el usuario no esta registrado, ir al registro
     if not session.get('usuario'):
         return render_template('registro.html', error="Registrese antes de finalizar su compra", title = "Registro") 
-    # leer el archivo
-    datos = open(os.path.join(app.root_path,"../si1users/"+session['usuario']+"/datos.dat"), encoding="utf-8").readlines()
-    # comprobar saldo
-    saldo = float(datos[4])
-    # si no hay saldo suficiente volver al carrito
-    if saldo < total:
-        catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-        catalogue = json.loads(catalogue_data)
 
-        return render_template('principal.html', title = "Home", movies = database.db_movieSelection(),
-                                    topSales = database.db_topSales(), genres=database.db_getGenres())
-    
-    # actualizar saldo
-    datos[4]=str(saldo-total)
-    datos_string= datos[0]+datos[1]+datos[2]+datos[3]+datos[4]
-    open(os.path.join(app.root_path,"../si1users/"+session['usuario']+"/datos.dat"),"w").write(datos_string)
-    
-    # anadir a compras.json
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/inventario.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    c_data = open(os.path.join(app.root_path,"../si1users/"+session['usuario']+"/compras.json"), encoding="utf-8").read()
+    # pay
+    flag = database.db_pay(session['customerid'], total)
 
-    if not c_data:
-        c = {'peliculas':[]}
-    else:
-        c = json.loads(c_data)
-    
-    if not c['peliculas']:
-        c['peliculas'] = []
-
-    for k in session['carrito']:
-        for j in catalogue['peliculas']:
-            if k == j['id']:
-                j['fecha']=str(date.today())
-                c['peliculas'].append(j)
-               
-    json.dump(c, open(os.path.join(app.root_path,"../si1users/"+session['usuario']+"/compras.json"), "w"))
-
+    # compra procesada
     # vaciar el carrito
     session['carrito']=[]
     session.modified = True
