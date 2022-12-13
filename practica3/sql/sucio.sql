@@ -31,3 +31,5 @@ WHERE B.movieid='29955'
 SELECT movietitle, ratingmean
 FROM imdb_movies 
 WHERE movieid=44392;
+
+
