@@ -52,7 +52,8 @@ def topUK():
     result3 = topUK.find(query3)
     for z in result3:
         list3.append(z)
-
+    
     movies=[list1,list2, list3]
+    
 
     return render_template('topUK.html', movies=movies)

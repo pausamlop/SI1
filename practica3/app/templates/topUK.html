@@ -15,11 +15,63 @@
  
     <h2> Ejemplo de MongoDB</h2>
 
-    <!-- TODO: tabla de películas Consulta 1 -->
+      {%for movie_list in movies%}
+        <table class="default">
 
-    <!-- TODO: tabla de películas Consulta 2 -->
+          {%if movie_list == movies[0]%}
+            <caption><p class="title">Comedias entre los 90 y los 92</p></caption>
 
-    <!-- TODO: tabla de películas Consulta 3 -->
+          {%elif movie_list == movies[1]%}
+            <caption><p class="title">Películas de acción de los 95,97 y 98 que empiezan por 'The'</p></caption>
 
+          {%else%}
+            <caption><p class="title">Películas en las que han compartido reparto Darren McAree y Katie Lockett</p></caption>
+
+          {%endif%}
+
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Genres</th>
+              <th scope="col">Year</th>
+              <th scope="col">Number of votes</th>
+              <th scope="col">Average rating</th>
+              <th scope="col">Directors</th>
+              <th scope="col">Actors</th>
+              <th scope="col">Related movies</th>
+            </tr>
+          </thead>
+        
+          {%for movie in movie_list%}
+            <tbody>
+
+                <tr>
+                  <td>{{movie.title}}</td>
+                  <td>{%for genre in movie.genres%}
+                    {{genre}}
+                  {%endfor%}</td>
+                  <td>{{movie.year}}</td>
+                  <td>{{movie.number_of_votes}}</td>
+                  <td>{{movie.average_rating}}</td>
+                  <td>{%for director in movie.directors%}
+                    {{director}}
+                  {%endfor%}</td>
+                  <td>{%for actor in movie.actors%}
+                    {{actor}}
+                  {%endfor%}</td>
+                  <td>{%for related in movie.related_movies%}
+                      Title: {{related.title}}, Year: {{related.year}}, Rating: {{related.average_rating}}     
+                  {%endfor%}</td>
+              
+                </tr>
+              
+
+            </tbody>
+          {%endfor%}
+
+        </table>
+      {%endfor%}
+
+     
   </BODY>
 </HTML>
