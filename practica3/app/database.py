@@ -140,6 +140,8 @@ def delState(state, bFallo, bSQL, duerme, bCommit):
         # funcionamiento correcto
         else:
 
+            time.sleep(duerme)
+
             # BORRAR LAS ORDERS DE CADA CLIENTE
             dbr.append("Borrando las orders de los clientes.")
             if bSQL:

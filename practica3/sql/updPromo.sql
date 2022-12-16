@@ -24,7 +24,7 @@ BEGIN
 -- se actualiza el valor promo de un cliente
 IF (TG_OP = 'UPDATE') THEN
 
-    PERFORM pg_sleep(20);
+    PERFORM pg_sleep(10);
 
     UPDATE orderdetail
     SET price = products.price * ((100-NEW.promo)/100)
